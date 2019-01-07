@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Venkat Mandela - NixOS network proxy setup when roaming</title>
+	<!--
+     <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+	<link rel="stylesheet" type="text/css" href="/css/default.css" />
+    -->
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/docs.min.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/syntax.css" />
+	<link rel="stylesheet" type="text/css" href="../../css/custom.css" />
+    </head>
+    <body class="container" data-spy="scroll" data-target=".sidebar1">
+        <div id="header">
+            <ul id="navigation" class="nav nav-pills">
+                <li><a href="../../">Home</a></li>
+             <!-- <li><a href="/contact.html">Contact</a></li> -->
+                <li><a href="../../archive.html">Archive</a></li>
+                <li><a href="../../about.html">About</a></li>
+            </ul>
+        </div>
+
+        <div id="content">
+            <h1>NixOS network proxy setup when roaming</h1>
+
+            <div class="info">
+    Posted on August  4, 2018
+    
+</div>
+
+<div class="row">
+<div class="col-md-9" role="main">
+<p><strong>Note</strong> : This post assumes familiarity with NixOS <a href="https://nixos.org" class="uri">https://nixos.org</a></p>
+<p>One of the problems I faced when using NixOS is network access when moving my laptop between work environment and home environment. The office network needs a proxy for internet access while the home network is a direct connection.</p>
+<p>This is not a problem when not updating your configuration.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="bu">export</span> <span class="va">HTTP_PROXY=</span>http://corporate.proxy.com:port</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">wget</span> www.google.com</a></code></pre></div>
+<p>However this gets problematic when trying to install a new package. Package updates are performed by the Nix daemon. The proxy settings for Nix daemon are derived from nixos configuration [2].</p>
+<h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting</h2>
+<p>The first solution that I tried was updating nixos configuration after switching networks and rebuilding the configuration. This got tedious quickly. On top of it, rebuilding configuration without network access could fail [3].</p>
+<h2 id="other-options">Other Options</h2>
+<p>After digging a bit more, I came across 3 more options.</p>
+<ol type="1">
+<li><p>Child configurations - These are new configurations that are built each time a nixos configuration is built. These are treated as a separate configuration from the base configuration, almost as a peer to it.</p>
+<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.clone" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.clone</a> for more information.</p></li>
+<li><p>Clone configurations - These are also new configurations that are built each time a nixos configuration is built but are treated as variations on top of a base configuration. This is the most suitable option for my usecase.</p>
+<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.children" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.children</a> for more information.</p></li>
+<li><p>Profiles - Profiles are system configurations that need to be explicitly built and are maintained separately from the default boot configuration. This is not suitable for my usecase as the configuration needs to be manually built to keep it up to date.</p></li>
+</ol>
+<p>I decided to try the clone configuration as it was most suited to my usecase.</p>
+<h2 id="clone-configuration">Clone configuration</h2>
+<p>Adding the clone configuration to <code>/etc/nixos/configuration.nix</code> was straight forward.</p>
+<pre><code>boot.loader.grub.configurationName = &quot;Default&quot;;
+nesting.clone = [
+        {
+                boot.loader.grub.configurationName = lib.mkForce &quot;Work&quot;;
+                networking.proxy.default = &quot;http://proxy.work.com:80&quot;;
+                networking.proxy.noProxy = &quot;127.0.0.1,localhost,work.com&quot;;
+         }
+]</code></pre>
+<p>After building the configuration once with</p>
+<pre><code>$ sudo nixos-rebuild switch</code></pre>
+<p>I could switch the proxy settings easily by switching from the parent configuration to the cloned configuration.</p>
+<pre><code>$ sudo /run/current-system/fine-tune/child-1/bin/switch-to-configuration test</code></pre>
+<p>One minor inconvenience remained. I had no way of selecting the proxy configurations on boot. I discovered that this functionality existed at some point and was temporarily disabled during refactoring. I have enabled this feature and filed a PR on Nixpkgs. The PR is pending as I am yet to figure out the right way to test it.</p>
+<p><a href="https://github.com/NixOS/nixpkgs/pull/45345" class="uri">https://github.com/NixOS/nixpkgs/pull/45345</a></p>
+<p>If you are interested, please give it a shot and comment on the PR.</p>
+<h1 id="references">References</h1>
+<ol type="1">
+<li>roaming laptop: network proxy configuration - <a href="https://github.com/NixOS/nixpkgs/issues/27535" class="uri">https://github.com/NixOS/nixpkgs/issues/27535</a></li>
+<li>Nix-daemon proxy setup - <a href="https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143" class="uri">https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143</a></li>
+<li>[Nix-dev] nixos-rebuild without Internet - <a href="https://nixos.org/nix-dev/2017-June/023965.html" class="uri">https://nixos.org/nix-dev/2017-June/023965.html</a></li>
+<li>Support multiple configuration files (selectable from grub) - <a href="https://github.com/NixOS/nixpkgs/issues/23458" class="uri">https://github.com/NixOS/nixpkgs/issues/23458</a></li>
+</ol>
+</div>
+
+<div class="col-md-3" role="complementary">
+  <nav class="bs-docs-sidebar">
+    <div id="sidebar" class="sidebar1">
+      <ul>
+      <li><a href="#update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting</a></li>
+      <li><a href="#other-options">Other Options</a></li>
+      <li><a href="#clone-configuration">Clone configuration</a></li>
+      <li><a href="#references">References</a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+</div>
+
+
+        </div>
+        <div id="footer">
+	  <hr />
+            Site generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+	    Styled using <a href="http://getbootstrap.com/">Bootstrap</a>.
+        </div>
+        <script src="../../js/jquery-1.11.2.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/apply-styles.js"> </script>
+        <script src="../../js/masonry.pkgd.min.js"></script>
+        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    </body>
+</html>
