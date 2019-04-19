@@ -37,8 +37,8 @@
 <p><strong>Note</strong> : This post assumes familiarity with NixOS <a href="https://nixos.org" class="uri">https://nixos.org</a></p>
 <p>One of the problems I faced when using NixOS is network access when moving my laptop between work environment and home environment. The office network needs a proxy for internet access while the home network is a direct connection.</p>
 <p>This is not a problem when not updating your configuration.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="bu">export</span> <span class="va">HTTP_PROXY=</span>http://corporate.proxy.com:port</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">wget</span> www.google.com</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="bu">export</span> <span class="va">HTTP_PROXY=</span>http://corporate.proxy.com:port</a>
+<a class="sourceLine" id="cb1-2" title="2">$ <span class="fu">wget</span> www.google.com</a></code></pre></div>
 <p>However this gets problematic when trying to install a new package. Package updates are performed by the Nix daemon. The proxy settings for Nix daemon are derived from nixos configuration [2].</p>
 <h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting</h2>
 <p>The first solution that I tried was updating nixos configuration after switching networks and rebuilding the configuration. This got tedious quickly. On top of it, rebuilding configuration without network access could fail [3].</p>
