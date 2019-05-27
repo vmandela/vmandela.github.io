@@ -1,5 +1,7 @@
 $( document ).ready(function() {
  
+
+    anchors.add();
     // bootstrap needs blockquote class
     // on the tag to apply styles
     $("blockquote").addClass("blockquote");
