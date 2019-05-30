@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Venkat Mandela - Serial Port Tools on Linux</title>
+        <link rel="stylesheet" href="../../css/bulma-0.7.5.min.css">
+        <link rel="stylesheet" href="../../css/syntax.css">
+	<link rel="icon" type="image/x-icon" href="../../favicon.ico" />
+	<meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../../">Venkat Mandela</a>
+                <!-- navbar items, navbar burger... -->
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../">Home</a>
+                    <a class="navbar-item" href="../../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+            <h1 class="title"> Serial Port Tools on Linux </h1>
+            <div class="info">
+    Posted on May 28, 2019
+    
+</div>
+
+<div class="container">
+<div class="columns">
+<div class="column content is-10">
+<p>This page lists a set of tips that I have collected over the years using serial port for interacting with embedded boards.</p>
+<h2 id="minicom">Minicom</h2>
+<ol type="1">
+<li><p>Use <code>minicom -w</code> to start minicom with line wrapping enabled.</p></li>
+<li><p>Add yourself to the ‘dialout’ group to open Serial ports without using <code>sudo</code>. Remember to logout and login for the newly added group membership to take effect.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="fu">sudo</span> adduser vmandela dialout</a></code></pre></div></li>
+<li><p>Use <code>minicom -C log.txt</code> to the UART port output.</p></li>
+<li><p>Hit <code>Ctrl+a</code>,<code>N</code> to toggle timestamps in minicom. I normally use <a href="#grabserial">GrabSerial</a> instead if I need timing information from uart logs.</p></li>
+</ol>
+<h3 id="minicom-config-files">Minicom config files</h3>
+<ol type="1">
+<li><p>The system wide configuration file for minicom is in <code>/etc/minicom/minirc.dfl</code>. You can override the system configuration by creating a config file at <code>~/.minirc.dfl</code>.</p></li>
+<li><p>To open a specific port by name(say usb0), create a file <code>~/.minirc.usb0</code> and include all the required configuration parameters in it.</p>
+<pre><code>$ cat ~/.minirc.usb0
+pu port             /dev/ttyUSB0
+pu baudrate         115200
+pu bits             8
+pu parity           N
+pu stopbits         1</code></pre>
+<p>Now you can open <code>/dev/ttyUSB0</code> by doing</p>
+<pre><code>$ minicom usb0</code></pre>
+<p>instead of</p>
+<pre><code>$ minicom -D /dev/ttyUSB0</code></pre></li>
+</ol>
+<h2 id="use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports</h2>
+<p>For boards which have multiple UART outputs, I use byobu + tmux to open all the UART ports in one command. The boards usually have multiple UART’s multiplexed on to a single USB port using an <a href="https://www.ftdichip.com/Products/ICs/FT4232H.htm">FTDI chip</a>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1">$ <span class="fu">cat</span> ~/.byobu/windows.tmux.evm1</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">new-session</span> -n port0 -c /home/vmandela/work/ minicom -c on -w -C port0.txt usb0<span class="kw">;</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ex">new-window</span> -n port1 -c /home/vmandela/work/ minicom  -c on -w -C port1.txt usb1<span class="kw">;</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">new-window</span> -n port2 -c /home/vmandela/work/ minicom  -c on -w -C a53.txt usb2<span class="kw">;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ex">rename-session</span> EVM1-UART</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">$ <span class="va">BYOBU_WINDOWS=</span>evm1 <span class="ex">byobu</span></a></code></pre></div>
+<h2 id="grabserial">GrabSerial</h2>
+<p><a href="https://github.com/tbird20d/grabserial">Grabserial</a> is an amazing tool for capturing and timestamping UART logs. I used it extensively when performing boot time optimizations. Grabserial provides a running time stamp as well as delta from the previous line. This makes it easy to identify functionality consuming most time.</p>
+<p>You can install <code>grabserial</code> from ubuntu repositories.</p>
+<pre><code>$ sudo apt install grabserial</code></pre>
+<p>It is also available in the NixOS repositories.</p>
+<pre><code>$ nix-env -iA nixpkgs.grabserial</code></pre>
+<p>The below command captures logs from ttyUSB5 until 120 seconds or receiving the string “test(s)”</p>
+<pre><code>$ grabserial -d /dev/ttyUSB5 -q 'test\(s\)' -e 120 | tee /home/vmandela/work/usb5.txt</code></pre>
+<p>Add the <code>-t</code> command line option to enable timestamping.</p>
+<h2 id="xmodem-file-transfer">XModem File transfer</h2>
+<p>One of the issues with <code>minicom</code> is the lack of scripting facilities. On Windows, <a href="https://ttssh2.osdn.jp/index.html.en">TeraTerm</a> offers scripting with its own <a href="https://ttssh2.osdn.jp/manual/en/macro/syntax/index.html">TTL</a> language. I did not find a viable alternative on Linux yet and had to use python to automate booting of an board over UART. Here is a python script that boots a <a href="http://www.ti.com/tool/TMDX654GPEVM">AM6 EVM</a> over UART.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">#!/usr/bin/env python</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="im">import</span> serial</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="im">from</span> xmodem <span class="im">import</span> XMODEM</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="im">import</span> logging</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="im">import</span> subprocess</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co"># Uncomment for logs on XMODEM block transfer</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="co"># logging.basicConfig(level=logging.DEBUG)</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">uart_port<span class="op">=</span><span class="st">'/dev/ttyUSB5'</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="bu">print</span> <span class="st">&quot;Port used is &quot;</span> <span class="op">+</span> uart_port</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">bin_loc<span class="op">=</span><span class="st">'test.bin'</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">port <span class="op">=</span> serial.Serial(uart_port,</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">                     <span class="dv">115200</span>, timeout<span class="op">=</span><span class="dv">1</span>) <span class="co"># or whatever port you need</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="kw">def</span> getc(size, timeout<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">    <span class="cf">return</span> port.read(size) <span class="kw">or</span> <span class="va">None</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21"><span class="kw">def</span> putc(data, timeout<span class="op">=</span><span class="dv">1</span>):</a>
+<a class="sourceLine" id="cb9-22" data-line-number="22">    <span class="cf">return</span> port.write(data)  <span class="co"># note that this ignores the timeout</span></a>
+<a class="sourceLine" id="cb9-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb9-24" data-line-number="24">modem <span class="op">=</span> XMODEM(getc, putc)</a>
+<a class="sourceLine" id="cb9-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb9-26" data-line-number="26"><span class="co"># Wait for character indicating the EVM is ready to receive the binary</span></a>
+<a class="sourceLine" id="cb9-27" data-line-number="27"><span class="bu">print</span> <span class="st">&quot;Waiting for C&quot;</span></a>
+<a class="sourceLine" id="cb9-28" data-line-number="28">rcv <span class="op">=</span> <span class="st">'d'</span></a>
+<a class="sourceLine" id="cb9-29" data-line-number="29"><span class="cf">while</span> rcv <span class="op">!=</span> <span class="st">'C'</span>:</a>
+<a class="sourceLine" id="cb9-30" data-line-number="30">    rcv <span class="op">=</span> port.read(<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb9-31" data-line-number="31">    <span class="cf">if</span> rcv:</a>
+<a class="sourceLine" id="cb9-32" data-line-number="32">        <span class="bu">print</span> rcv</a>
+<a class="sourceLine" id="cb9-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb9-34" data-line-number="34"><span class="bu">print</span> <span class="st">&quot;Sending file&quot;</span></a>
+<a class="sourceLine" id="cb9-35" data-line-number="35"><span class="bu">bin</span> <span class="op">=</span> <span class="bu">open</span>(bin_loc, <span class="st">'rb'</span>)</a>
+<a class="sourceLine" id="cb9-36" data-line-number="36">modem.send(<span class="bu">bin</span>)</a>
+<a class="sourceLine" id="cb9-37" data-line-number="37"><span class="bu">bin</span>.close()</a>
+<a class="sourceLine" id="cb9-38" data-line-number="38">port.close()</a></code></pre></div>
+</div>
+
+
+    <div class="column is-narrow menu">
+        <div class="sidebar">
+            <p class="menu-label">Sections</p>
+            <ul>
+            <li><a href="#minicom">Minicom</a><ul>
+            <li><a href="#minicom-config-files">Minicom config files</a></li>
+            </ul></li>
+            <li><a href="#use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports</a></li>
+            <li><a href="#grabserial">GrabSerial</a></li>
+            <li><a href="#xmodem-file-transfer">XModem File transfer</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+
+            <div id="footer">
+                <div class="has-text-centered">
+                    Site generated by
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+                    Styled using <a href="http://bulma.io/">Bulma</a>.
+                </div>
+            </div>
+        </div>
+        <style>
+         .sidebar {
+             position: sticky;
+             top: 10px;
+         }
+        </style>
+        <script src="../../js/jquery-3.4.1.min.js"></script>
+        <script src="../../js/apply-styles.js"></script>
+        <script src="../../js/anchor-4.2.0.min.js"></script>
+    </body>
+</html>
