@@ -73,14 +73,30 @@
         <style>
          .sidebar {
              position: sticky;
-             top: 10px;
+             top: 50px;
          }
-         a:not(.anchorjs-link):hover {
+         .content a:not(.anchorjs-link):hover {
              background-color: yellow;
          }
+         .sidebar  .anchorjs-link {
+             display: none
+         }
+
+         .anchorjs-link {
+           opacity: 0;
+           text-decoration: none;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+         }
+
+         *:hover > .anchorjs-link,
+         .anchorjs-link:focus  {
+           opacity: 1;
+         }
         </style>
-        <script src="./js/jquery-3.4.1.min.js"></script>
-        <script src="./js/apply-styles.js"></script>
-        <script src="./js/anchor-4.2.0.min.js"></script>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
     </body>
 </html>

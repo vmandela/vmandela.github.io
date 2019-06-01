@@ -55,9 +55,9 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="bu">export</span> <span class="va">HTTP_PROXY=</span>http://corporate.proxy.com:port</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">wget</span> www.google.com</a></code></pre></div>
 <p>However this gets problematic when trying to install a new package. Package updates are performed by the Nix daemon. The proxy settings for Nix daemon are derived from nixos configuration [2].</p>
-<h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting</h2>
+<h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting<a href="#update-configuration-with-the-new-proxy-setting" class="anchorjs-link"> #</a></h2>
 <p>The first solution that I tried was updating nixos configuration after switching networks and rebuilding the configuration. This got tedious quickly. On top of it, rebuilding configuration without network access could fail [3].</p>
-<h2 id="other-options">Other Options</h2>
+<h2 id="other-options">Other Options<a href="#other-options" class="anchorjs-link"> #</a></h2>
 <p>After digging a bit more, I came across 3 more options.</p>
 <ol type="1">
 <li><p>Child configurations - These are new configurations that are built each time a nixos configuration is built. These are treated as a separate configuration from the base configuration, almost as a peer to it.</p>
@@ -67,7 +67,7 @@
 <li><p>Profiles - Profiles are system configurations that need to be explicitly built and are maintained separately from the default boot configuration. This is not suitable for my usecase as the configuration needs to be manually built to keep it up to date.</p></li>
 </ol>
 <p>I decided to try the clone configuration as it was most suited to my usecase.</p>
-<h2 id="clone-configuration">Clone configuration</h2>
+<h2 id="clone-configuration">Clone configuration<a href="#clone-configuration" class="anchorjs-link"> #</a></h2>
 <p>Adding the clone configuration to <code>/etc/nixos/configuration.nix</code> was straight forward.</p>
 <pre><code>boot.loader.grub.configurationName = &quot;Default&quot;;
 nesting.clone = [
@@ -84,7 +84,7 @@ nesting.clone = [
 <p>One minor inconvenience remained. I had no way of selecting the proxy configurations on boot. I discovered that this functionality existed at some point and was temporarily disabled during refactoring. I have enabled this feature and filed a PR on Nixpkgs. The PR is pending as I am yet to figure out the right way to test it.</p>
 <p><a href="https://github.com/NixOS/nixpkgs/pull/45345" class="uri">https://github.com/NixOS/nixpkgs/pull/45345</a></p>
 <p>If you are interested, please give it a shot and comment on the PR.</p>
-<h2 id="references">References</h2>
+<h2 id="references">References<a href="#references" class="anchorjs-link"> #</a></h2>
 <ol type="1">
 <li>roaming laptop: network proxy configuration - <a href="https://github.com/NixOS/nixpkgs/issues/27535" class="uri">https://github.com/NixOS/nixpkgs/issues/27535</a></li>
 <li>Nix-daemon proxy setup - <a href="https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143" class="uri">https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143</a></li>
@@ -96,20 +96,22 @@ nesting.clone = [
         <div class="column is-narrow menu">
             <div class="sidebar">
                 <p class="menu-label">Root</p>
-                <ul>
+                <ul class="menu-list">
                     <li> <a href="../../">Home</a> </li>
                     <li> <a href="../../about.html">About</a> </li>
                 </ul>
                                 <p class="menu-label">Sections</p>
+                <div class="menu-list">
                 <ul>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting</a></li>
-                <li><a href="#other-options">Other Options</a></li>
-                <li><a href="#clone-configuration">Clone configuration</a></li>
-                <li><a href="#references">References</a></li>
+                <li><a href="#update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting<a href="#update-configuration-with-the-new-proxy-setting" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#other-options">Other Options<a href="#other-options" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#clone-configuration">Clone configuration<a href="#clone-configuration" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#references">References<a href="#references" class="anchorjs-link"> #</a></a></li>
                 </ul>
+                </div>
                             </div>
         </div>
 
@@ -130,14 +132,30 @@ nesting.clone = [
         <style>
          .sidebar {
              position: sticky;
-             top: 10px;
+             top: 50px;
          }
-         a:not(.anchorjs-link):hover {
+         .content a:not(.anchorjs-link):hover {
              background-color: yellow;
          }
+         .sidebar  .anchorjs-link {
+             display: none
+         }
+
+         .anchorjs-link {
+           opacity: 0;
+           text-decoration: none;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+         }
+
+         *:hover > .anchorjs-link,
+         .anchorjs-link:focus  {
+           opacity: 1;
+         }
         </style>
-        <script src="../../js/jquery-3.4.1.min.js"></script>
-        <script src="../../js/apply-styles.js"></script>
-        <script src="../../js/anchor-4.2.0.min.js"></script>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
     </body>
 </html>

@@ -50,7 +50,7 @@
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
 <p>This page lists a set of tips that I have collected over the years using serial port for interacting with embedded boards.</p>
-<h2 id="minicom">Minicom</h2>
+<h2 id="minicom">Minicom<a href="#minicom" class="anchorjs-link"> #</a></h2>
 <ol type="1">
 <li><p>Use <code>minicom -w</code> to start minicom with line wrapping enabled.</p></li>
 <li><p>Add yourself to the ‘dialout’ group to open Serial ports without using <code>sudo</code>. Remember to logout and login for the newly added group membership to take effect.</p>
@@ -58,7 +58,7 @@
 <li><p>Use <code>minicom -C log.txt</code> to the UART port output.</p></li>
 <li><p>Hit <code>Ctrl+a</code>,<code>N</code> to toggle timestamps in minicom. I normally use <a href="#grabserial">GrabSerial</a> instead if I need timing information from uart logs.</p></li>
 </ol>
-<h3 id="minicom-config-files">Minicom config files</h3>
+<h3 id="minicom-config-files">Minicom config files<a href="#minicom-config-files" class="anchorjs-link"> #</a></h3>
 <ol type="1">
 <li><p>The system wide configuration file for minicom is in <code>/etc/minicom/minirc.dfl</code>. You can override the system configuration by creating a config file at <code>~/.minirc.dfl</code>.</p></li>
 <li><p>To open a specific port by name(say usb0), create a file <code>~/.minirc.usb0</code> and include all the required configuration parameters in it.</p>
@@ -73,7 +73,7 @@ pu stopbits         1</code></pre>
 <p>instead of</p>
 <pre><code>$ minicom -D /dev/ttyUSB0</code></pre></li>
 </ol>
-<h2 id="use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports</h2>
+<h2 id="use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports<a href="#use-byobu-for-multiple-serial-ports" class="anchorjs-link"> #</a></h2>
 <p>For boards which have multiple UART outputs, I use byobu + tmux to open all the UART ports in one command. The boards usually have multiple UART’s multiplexed on to a single USB port using an <a href="https://www.ftdichip.com/Products/ICs/FT4232H.htm">FTDI chip</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1">$ <span class="fu">cat</span> ~/.byobu/windows.tmux.evm1</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ex">new-session</span> -n port0 -c /home/vmandela/work/ minicom -c on -w -C port0.txt usb0<span class="kw">;</span></a>
@@ -81,7 +81,7 @@ pu stopbits         1</code></pre>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ex">new-window</span> -n port2 -c /home/vmandela/work/ minicom  -c on -w -C a53.txt usb2<span class="kw">;</span></a>
 <a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ex">rename-session</span> EVM1-UART</a>
 <a class="sourceLine" id="cb5-6" data-line-number="6">$ <span class="va">BYOBU_WINDOWS=</span>evm1 <span class="ex">byobu</span></a></code></pre></div>
-<h2 id="grabserial">GrabSerial</h2>
+<h2 id="grabserial">GrabSerial<a href="#grabserial" class="anchorjs-link"> #</a></h2>
 <p><a href="https://github.com/tbird20d/grabserial">Grabserial</a> is an amazing tool for capturing and timestamping UART logs. I used it extensively when performing boot time optimizations. Grabserial provides a running time stamp as well as delta from the previous line. This makes it easy to identify functionality consuming most time.</p>
 <p>You can install <code>grabserial</code> from ubuntu repositories.</p>
 <pre><code>$ sudo apt install grabserial</code></pre>
@@ -90,7 +90,7 @@ pu stopbits         1</code></pre>
 <p>The below command captures logs from ttyUSB5 until 120 seconds or receiving the string “test(s)”</p>
 <pre><code>$ grabserial -d /dev/ttyUSB5 -q 'test\(s\)' -e 120 | tee /home/vmandela/work/usb5.txt</code></pre>
 <p>Add the <code>-t</code> command line option to enable timestamping.</p>
-<h2 id="xmodem-file-transfer">XModem File transfer</h2>
+<h2 id="xmodem-file-transfer">XModem File transfer<a href="#xmodem-file-transfer" class="anchorjs-link"> #</a></h2>
 <p>One of the issues with <code>minicom</code> is the lack of scripting facilities. On Windows, <a href="https://ttssh2.osdn.jp/index.html.en">TeraTerm</a> offers scripting with its own <a href="https://ttssh2.osdn.jp/manual/en/macro/syntax/index.html">TTL</a> language. I did not find a viable alternative on Linux yet and had to use python to automate booting of an board over UART. Here is a python script that boots a <a href="http://www.ti.com/tool/TMDX654GPEVM">AM6 EVM</a> over UART.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co">#!/usr/bin/env python</span></a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="im">import</span> serial</a>
@@ -135,22 +135,24 @@ pu stopbits         1</code></pre>
         <div class="column is-narrow menu">
             <div class="sidebar">
                 <p class="menu-label">Root</p>
-                <ul>
+                <ul class="menu-list">
                     <li> <a href="../../">Home</a> </li>
                     <li> <a href="../../about.html">About</a> </li>
                 </ul>
                                 <p class="menu-label">Sections</p>
+                <div class="menu-list">
                 <ul>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#minicom">Minicom</a><ul>
-                <li><a href="#minicom-config-files">Minicom config files</a></li>
+                <li><a href="#minicom">Minicom<a href="#minicom" class="anchorjs-link"> #</a></a><ul>
+                <li><a href="#minicom-config-files">Minicom config files<a href="#minicom-config-files" class="anchorjs-link"> #</a></a></li>
                 </ul></li>
-                <li><a href="#use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports</a></li>
-                <li><a href="#grabserial">GrabSerial</a></li>
-                <li><a href="#xmodem-file-transfer">XModem File transfer</a></li>
+                <li><a href="#use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports<a href="#use-byobu-for-multiple-serial-ports" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#grabserial">GrabSerial<a href="#grabserial" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#xmodem-file-transfer">XModem File transfer<a href="#xmodem-file-transfer" class="anchorjs-link"> #</a></a></li>
                 </ul>
+                </div>
                             </div>
         </div>
 
@@ -171,14 +173,30 @@ pu stopbits         1</code></pre>
         <style>
          .sidebar {
              position: sticky;
-             top: 10px;
+             top: 50px;
          }
-         a:not(.anchorjs-link):hover {
+         .content a:not(.anchorjs-link):hover {
              background-color: yellow;
          }
+         .sidebar  .anchorjs-link {
+             display: none
+         }
+
+         .anchorjs-link {
+           opacity: 0;
+           text-decoration: none;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+         }
+
+         *:hover > .anchorjs-link,
+         .anchorjs-link:focus  {
+           opacity: 1;
+         }
         </style>
-        <script src="../../js/jquery-3.4.1.min.js"></script>
-        <script src="../../js/apply-styles.js"></script>
-        <script src="../../js/anchor-4.2.0.min.js"></script>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
     </body>
 </html>
