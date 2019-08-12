@@ -51,7 +51,7 @@
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
 <p><strong>Note</strong> : This post assumes familiarity with NixOS <a href="https://nixos.org" class="uri">https://nixos.org</a></p>
 <p>One of the problems I faced when using NixOS is network access when moving my laptop between work environment and home environment. The office network needs a proxy for internet access while the home network is a direct connection.</p>
-<p>This is not a problem when not updating your configuration.</p>
+<p>Normally this is not a problem. I can set the proxy variable in the shell I am in.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="bu">export</span> <span class="va">HTTP_PROXY=</span>http://corporate.proxy.com:port</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">wget</span> www.google.com</a></code></pre></div>
 <p>However this gets problematic when trying to install a new package. Package updates are performed by the Nix daemon. The proxy settings for Nix daemon are derived from nixos configuration [2].</p>
@@ -81,9 +81,9 @@ nesting.clone = [
 <pre><code>$ sudo nixos-rebuild switch</code></pre>
 <p>I could switch the proxy settings easily by switching from the parent configuration to the cloned configuration.</p>
 <pre><code>$ sudo /run/current-system/fine-tune/child-1/bin/switch-to-configuration test</code></pre>
-<p>One minor inconvenience remained. I had no way of selecting the proxy configurations on boot. I discovered that this functionality existed at some point and was temporarily disabled during refactoring. I have enabled this feature and filed a PR on Nixpkgs. The PR is pending as I am yet to figure out the right way to test it.</p>
+<p>One minor inconvenience remained. I had no way of selecting the proxy configurations on boot. I discovered that this functionality existed at some point and was temporarily disabled during refactoring. I enabled this feature and filed a PR on Nixpkgs.</p>
 <p><a href="https://github.com/NixOS/nixpkgs/pull/45345" class="uri">https://github.com/NixOS/nixpkgs/pull/45345</a></p>
-<p>If you are interested, please give it a shot and comment on the PR.</p>
+<p>This PR took almost an year to get merged due to the iterations on test cases and delays due to my work commitments. You should be able to select different proxy configurations from the boot loader menu from NixOS 19.09.</p>
 <h2 id="references">References<a href="#references" class="anchorjs-link"> #</a></h2>
 <ol type="1">
 <li>roaming laptop: network proxy configuration - <a href="https://github.com/NixOS/nixpkgs/issues/27535" class="uri">https://github.com/NixOS/nixpkgs/issues/27535</a></li>
