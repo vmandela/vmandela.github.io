@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Venkat Mandela - Annotating Mscgen sequence diagrams</title>
+        <link rel="stylesheet" href="../../css/bulma.custom.css">
+        <link rel="stylesheet" href="../../css/syntax.css">
+        <meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
+
+        <link rel="icon" type="image/svg+xml" href="../../images/favicon/favicon.svg" sizes="any" />
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-24x24.png" sizes="24x24">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-40x40.png" sizes="40x40">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-64x64.png" sizes="64x64">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-128x128.png" sizes="128x128">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-256x256.png" sizes="256x256">
+<link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+
+
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../../">Venkat Mandela</a>
+                <!-- navbar items, navbar burger... -->
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../">Home</a>
+                    <a class="navbar-item" href="../../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+            <h1 class="title"> Annotating Mscgen sequence diagrams </h1>
+            <div class="info">
+    Posted on August 18, 2019
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p><a href="http://www.mcternan.me.uk/mscgen/">Mscgen</a> is a nifty tool for generating <a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagrams</a>. It is easy to do live updates in design discussions due to</p>
+<ul>
+<li>the tool being text based</li>
+<li>fast execution</li>
+</ul>
+<p>I have an <code>iwatch</code> running mscgen on any modified files and <code>eog</code> displaying the output. <code>eog</code> reflects any file changes immediately, offering a live view.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="fu">cat</span> ~/handle-iwatch.sh</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#!/usr/bin/env bash</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">if [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .msc$<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="ex">mscgen</span> -Tpng <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">elif [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .dot$<span class="kw"> ]]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="ex">dot</span> -Tpng <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${1/</span>.dot<span class="va">/</span>.png<span class="va">}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">$ <span class="ex">iwatch</span> -c <span class="st">&quot;/home/vmandela/handle-iwatch.sh %f&quot;</span> -e modify /home/vmandela/work/img</a></code></pre></div>
+<p>One of the missing features in Mscgen is the ability to add notes within the sequence diagram. I use some of the existing features of mscgen to add notes. Sample output is below.</p>
+<figure>
+<img src="../../images/annotate.png" alt="Annotated mscgen output" /><figcaption>Annotated mscgen output</figcaption>
+</figure>
+<p>The tricks/hacks used are</p>
+<ol type="1">
+<li><p>Use an invisible entity for notes. The linecolor is set to white and label set to empty to prevent the entity from showing up in the output.</p>
+<pre><code>A15 [label=&quot;A15&quot;], m4 [label=&quot;M4&quot;], notes [linecolor=&quot;white&quot;,label=&quot;&quot;];</code></pre></li>
+<li><p>Create a box within the notes entity with the desired annotation. Set the line color to white to hide the box boundary.</p>
+<pre><code>notes box notes [label=&quot;M4 executes in parallel with A15 loading Linux&quot;,
+linecolor=&quot;white&quot;];</code></pre></li>
+<li><p>Place the annotation box at the same level as the desired operation.</p>
+<pre><code>A15 -&gt; A15 [label=&quot;Start loading\nLinux&quot;],
+m4 box m4 [label=&quot;Start Video Capture\nand\nDisplay&quot;],
+notes box notes [label=&quot;M4 executes in parallel with A15 loading Linux&quot;,
+linecolor=&quot;white&quot;];</code></pre></li>
+</ol>
+<p>The link to the full source is <a href="../../images/annotate.msc">here</a></p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="../../">Home</a> </li>
+                    <li> <a href="../../about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+
+            <div id="footer">
+                <div class="has-text-centered">
+                    Site generated by
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+                    Styled using <a href="http://bulma.io/">Bulma</a>.<br />
+                    &copy; Venkateswara Rao Mandela 2018-2019<br />
+                    This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.
+                </div>
+            </div>
+        </div>
+        <style>
+         .sidebar {
+             position: sticky;
+             top: 50px;
+         }
+         .content a:not(.anchorjs-link):hover {
+             background-color: yellow;
+         }
+         .sidebar  .anchorjs-link {
+             display: none
+         }
+
+         .anchorjs-link {
+           opacity: 0;
+           text-decoration: none;
+           -webkit-font-smoothing: antialiased;
+           -moz-osx-font-smoothing: grayscale;
+         }
+
+         *:hover > .anchorjs-link,
+         .anchorjs-link:focus  {
+           opacity: 1;
+         }
+
+         @media screen and (max-width: 1024px) {
+             body {
+                 margin-left: 10px;
+                 margin-right: 10px;
+              };
+         }
+
+         .title ~ .info {
+             margin-top: -1.4rem;
+             margin-bottom: 1rem;
+         }
+        </style>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
+    </body>
+</html>
