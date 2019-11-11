@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Venkat Mandela - Moved the site to vmandela.com</title>
+        <title>Venkat Mandela - Notes on Make</title>
         <link rel="stylesheet" href="../../css/bulma-0.7.5.min.css">
         <link rel="stylesheet" href="../../css/syntax.css">
         <meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
@@ -38,12 +38,12 @@
                 </div>
             </div>
         </nav>
-            <h1 class="title"> Moved the site to vmandela.com </h1>
+            <h1 class="title"> Notes on Make </h1>
             <div class="info">
-    Posted on August 12, 2019
+    Posted on November 11, 2019
     
   |
-        <a href="../../tags/blog%20setup.html" class="tag is-link">blog setup</a>
+        <a href="../../tags/make.html" class="tag is-link">make</a>
     
 </div>
 
@@ -52,13 +52,35 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>I have changed the URL for my site from <a href="https://vmandela.github.io" class="uri">https://vmandela.github.io</a> to <a href="https://vmandela.com" class="uri">https://vmandela.com</a>. Now I have recurring expense renewing the personal domain. :-)</p>
-<p>The change is simple as the process is well documented on the Github <a href="https://help.github.com/en/articles/using-a-custom-domain-with-github-pages">here</a> and <a href="https://help.github.com/en/articles/setting-up-an-apex-domain#configuring-a-records-with-your-dns-provider">here</a>. The change is my first brush with the different types of DNS records. I had to setup</p>
+<p>This is a collection of notes I have accumulated while working with make. The make manual is a good place to start looking for answers.</p>
+<p><a href="https://www.gnu.org/software/make/manual/make.html" class="uri">https://www.gnu.org/software/make/manual/make.html</a></p>
+<h2 id="debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> #</a></h2>
+<h2 id="gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> #</a></h2>
+<p>The <code>info</code> command can be used to dump information from makefile.</p>
+<p><a href="https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions" class="uri">https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions</a></p>
+<pre><code>$(info CFLAGS=$(CFLAGS))</code></pre>
+<p>Similarly one can use the <code>error</code> and <code>warning</code> commands can be used for debugging.</p>
+<h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> #</a></h3>
+<p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake with enhanced tracing and a builtin debugger. I have been using remake as a replacement for make on my development machine and am yet to run into any issues.</p>
+<pre><code>alias make=remake</code></pre>
+<p>Now you can use</p>
+<pre><code>make --trace</code></pre>
+<p>to get better information on why a target is being built/rebuilt.</p>
+<h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> #</a></h4>
 <ol type="1">
-<li>An <code>A</code> record - Pointing the domain vmandela.com to GitHub’s IP addresses.</li>
-<li>An <code>CNAME</code> record - Pointing “www.vmandela.com” to “vmandela.com”.</li>
+<li>Debugging makefiles with remake - <a href="https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf" class="uri">https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf</a></li>
+<li>Remake home page - <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a></li>
+<li>Remake GitHub repository - <a href="https://github.com/rocky/remake" class="uri">https://github.com/rocky/remake</a></li>
 </ol>
-<p>There are over 10 types of records listed on my domain sellers page. One more thing to add to the reading list.</p>
+<h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> #</a></h2>
+<p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise you might see warnings such as</p>
+<pre><code>make[1]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.</code></pre>
+<h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> #</a></h3>
+<ol type="1">
+<li>How the make variable works - <a href="https://www.gnu.org/software/make/manual/make.html#MAKE-Variable" class="uri">https://www.gnu.org/software/make/manual/make.html#MAKE-Variable</a></li>
+<li>GNUMake Jobserver Implementation - <a href="http://make.mad-scientist.net/papers/jobserver-implementation/" class="uri">http://make.mad-scientist.net/papers/jobserver-implementation/</a></li>
+<li>Recursive make considered harmful - <a href="http://aegis.sourceforge.net/auug97.pdf" class="uri">http://aegis.sourceforge.net/auug97.pdf</a></li>
+</ol>
         </div>
 
         <div class="column is-narrow menu">
@@ -68,6 +90,21 @@
                     <li> <a href="../../">Home</a> </li>
                     <li> <a href="../../about.html">About</a> </li>
                 </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> #</a></a><ul>
+                <li><a href="#remake">Remake<a href="#remake" class="anchorjs-link"> #</a></a></li>
+                </ul></li>
+                <li><a href="#parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> #</a></a><ul>
+                <li><a href="#related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> #</a></a></li>
+                </ul></li>
+                </ul>
+                </div>
                             </div>
         </div>
 
