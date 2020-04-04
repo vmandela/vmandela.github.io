@@ -55,19 +55,19 @@
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
 <h2 id="setting-log-level-dynamically">Setting log level dynamically<a href="#setting-log-level-dynamically" class="anchorjs-link"> #</a></h2>
 <p>If you want to change the log level for one iteration of a loop or one call of a function, it can be done by calling <code>setLevel</code> on the current logger instance.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="im">import</span> logging</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">logging.error(<span class="st">&quot;This statement will be shown&quot;</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">logging.debug(<span class="st">&quot;This will not be shown&quot;</span>)</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">logging.getLogger().setLevel(<span class="st">&quot;DEBUG&quot;</span>)</a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb1-9" data-line-number="9">logging.debug(<span class="st">&quot;This debug statement will be shown&quot;</span>)</a>
-<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11">logging.getLogger().setLevel(<span class="st">&quot;ERROR&quot;</span>)</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13">logging.debug(<span class="st">&quot;This debug statement will be hidden&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> logging</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a>logging.error(<span class="st">&quot;This statement will be shown&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a>logging.debug(<span class="st">&quot;This will not be shown&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>logging.getLogger().setLevel(<span class="st">&quot;DEBUG&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9"></a>logging.debug(<span class="st">&quot;This debug statement will be shown&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a>logging.getLogger().setLevel(<span class="st">&quot;ERROR&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13"></a>logging.debug(<span class="st">&quot;This debug statement will be hidden&quot;</span>)</span></code></pre></div>
 <p>This results in</p>
 <pre><code>ERROR:root:This statement will be shown
 DEBUG:root:This debug statement will be shown</code></pre>
@@ -91,8 +91,8 @@ DEBUG:root:This debug statement will be shown</code></pre>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#setting-log-level-dynamically">Setting log level dynamically<a href="#setting-log-level-dynamically" class="anchorjs-link"> #</a></a><ul>
-                <li><a href="#related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> #</a></a></li>
+                <li><a href="#setting-log-level-dynamically">Setting log level dynamically<span> #</span></a><ul>
+                <li><a href="#related-reading">Related reading<span> #</span></a></li>
                 </ul></li>
                 </ul>
                 </div>

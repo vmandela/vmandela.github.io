@@ -59,17 +59,17 @@
 <li>fast execution</li>
 </ul>
 <p>I have an <code>iwatch</code> running mscgen on any modified files and <code>eog</code> displaying the output. <code>eog</code> reflects any file changes immediately, offering a live view.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="fu">cat</span> ~/handle-iwatch.sh</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="co">#!/usr/bin/env bash</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">if [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .msc$<span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="ex">mscgen</span> -Tsvg <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">elif [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .dot$<span class="kw"> ]]</span>; <span class="kw">then</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="ex">dot</span> -Tpng <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${1/</span>.dot<span class="va">/</span>.png<span class="va">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">fi</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8">$ <span class="ex">iwatch</span> -c <span class="st">&quot;/home/vmandela/handle-iwatch.sh %f&quot;</span> -e modify /home/vmandela/work/img</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="fu">cat</span> ~/handle-iwatch.sh</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">if [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .msc$<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="ex">mscgen</span> -Tsvg <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">elif [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .dot$<span class="kw"> ]]</span>; <span class="kw">then</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="ex">dot</span> -Tpng <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${1/</span>.dot<span class="va">/</span>.png<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">fi</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>$ <span class="ex">iwatch</span> -c <span class="st">&quot;/home/vmandela/handle-iwatch.sh %f&quot;</span> -e modify /home/vmandela/work/img</span></code></pre></div>
 <p>One of the missing features in Mscgen is the ability to add notes within the sequence diagram. I use some of the existing features of mscgen to add notes. Sample output is below.</p>
 <figure>
-<img src="../../images/annotate.svg" alt="Annotated mscgen output" /><figcaption>Annotated mscgen output</figcaption>
+<img src="../../images/annotate.svg" alt /><figcaption>Annotated mscgen output</figcaption>
 </figure>
 <p>The tricks/hacks used are</p>
 <ol type="1">
