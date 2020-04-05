@@ -80,7 +80,7 @@
 <span id="cb4-10"><a href="#cb4-10"></a>simpleRenderLinkBulma _ <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
 <span id="cb4-11"><a href="#cb4-11"></a>simpleRenderLinkBulma tag (<span class="dt">Just</span> filePath) <span class="ot">=</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a>  <span class="dt">Just</span> <span class="op">$</span> H.a <span class="op">!</span> A.href (toValue <span class="op">$</span> toUrl filePath) <span class="op">!</span> A.class_ <span class="st">&quot;tag is-link&quot;</span> <span class="op">$</span> toHtml tag</span></code></pre></div>
-<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>.</p>
+<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>. The link to full source is here <a href="../../static_root/Tags.hs">Tags.hs</a>.</p>
         </div>
 
         <div class="column is-narrow menu">
