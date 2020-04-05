@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Venkat Mandela - NixOS configuration on a T480</title>
+        <link rel="stylesheet" href="../../css/bulma-0.7.5.min.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/syntax.css">
+        <meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
+
+        <link rel="icon" type="image/svg+xml" href="../../images/favicon/favicon.svg" sizes="any" />
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-24x24.png" sizes="24x24">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-40x40.png" sizes="40x40">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-64x64.png" sizes="64x64">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-128x128.png" sizes="128x128">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-256x256.png" sizes="256x256">
+<link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+
+
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../../">Venkat Mandela</a>
+                <!-- navbar items, navbar burger... -->
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../">Home</a>
+                    <a class="navbar-item" href="../../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+            <h1 class="title"> NixOS configuration on a T480 </h1>
+            <div class="info">
+    Posted on April  4, 2020
+    
+  |
+        <a href="../../tags/nixos.html" class="tag is-link">nixos</a> <a href="../../tags/t480.html" class="tag is-link">t480</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>After years of using nixpkgs on ubuntu and nixos in virtual machine, I finally made the switch to using nixos as the primary OS on the home laptop. As the home laptop is shared, I used a dual boot configuration with Windows10 along side NixOS. Each OS is installed to a separate hard disk. The installation process was pleasantly uneventful.</p>
+<ol type="1">
+<li><p>The WiFi card was autodetected. WiFi configuration was easy once I discovered <code>nmcli</code>.</p>
+<pre><code># /etc/nixos/configuration.nix
+networking.networkmanager.enable = true; # Enable network manager</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">nmcli</span> d wifi connect vmandela --ask</span></code></pre></div></li>
+<li><p>With grub os prober enabled, windows 10 showed up automatically in the bootloader menu.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Use the systemd-boot EFI boot loader.
+boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+        grub = {
+                enable = true;
+                devices = [ &quot;nodev&quot; ];
+                efiSupport = true;
+                useOSProber = true;
+        };
+};</code></pre></li>
+<li><p>Windows 10 and NixOS treat the hardware clock differently. Windows 10 treats the hardware clock as local time while NixOS treats it as UTC. To resolve this difference, I had to switch NixOS to treat hardware clock as local time.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Set your time zone.
+time.timeZone = &quot;Asia/Kolkata&quot;;
+# Use hardware clock in local time instead of UTC
+# This is required for compatibility with windows
+time.hardwareClockInLocalTime = true;</code></pre></li>
+<li><p><a href="https://store.steampowered.com/">Steam</a> worked out of the box following the instructions in the <a href="https://nixos.org/nixpkgs/manual/#sec-steam-play">Nixpkgs Manual</a>.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Required for steam
+hardware.pulseaudio.support32Bit = true;
+hardware.opengl.driSupport32Bit = true;</code></pre></li>
+<li><p>Setting up <a href="https://www.nginx.com/">NGINX</a> required a little document hunting. I use NGINX for checking out my blog locally before pushing it to github. My usecase fell into the so simple it is undocumented category.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Enable NGINX
+services.nginx = {
+    enable = true;
+    virtualHosts.&quot;localhost&quot; = {
+        root = &quot;/home/vmandela/code/gh-blog/_site&quot;;
+    };
+};</code></pre></li>
+<li><p>Power management and monitoring is done using <code>tlp</code> and <code>upower</code>.</p>
+<pre><code># For thinkpad
+services.tlp.enable = true;
+
+# Battery power management
+services.upower.enable = true;</code></pre></li>
+<li><p>Getting the user environment setup was done by reusing dotfiles from the previous machine and using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></li>
+</ol>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="../../">Home</a> </li>
+                    <li> <a href="../../about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+
+            <div id="footer">
+                <div class="has-text-centered">
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2020<br />
+                    This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
+                    Site generated by
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+                    Styled using <a href="http://bulma.io/">Bulma</a>.<br />
+                </div>
+            </div>
+        </div>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
+    </body>
+</html>
