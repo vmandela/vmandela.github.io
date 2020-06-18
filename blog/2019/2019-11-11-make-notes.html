@@ -67,6 +67,7 @@
 <p>Now you can use</p>
 <pre><code>make --trace</code></pre>
 <p>to get better information on why a target is being built/rebuilt.</p>
+<p>The <code>-B</code> option of remake triggers an unconditional rebuild of a specified target.</p>
 <h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> #</a></h4>
 <ol type="1">
 <li>Debugging makefiles with remake - <a href="https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf" class="uri">https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf</a></li>
@@ -82,6 +83,17 @@
 <li>GNUMake Jobserver Implementation - <a href="http://make.mad-scientist.net/papers/jobserver-implementation/" class="uri">http://make.mad-scientist.net/papers/jobserver-implementation/</a></li>
 <li>Recursive make considered harmful - <a href="http://aegis.sourceforge.net/auug97.pdf" class="uri">http://aegis.sourceforge.net/auug97.pdf</a></li>
 </ol>
+<h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> #</a></h2>
+<h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> #</a></h3>
+<p>When one of the dependencies is a symbolic link, make checks the modification time of the file referenced by the link. This is sensible behaviour and probably the reason it is not called out in the gnu make manual.</p>
+<p>There is also the “-L” option which causes make to consider the modification time of the symlink as well. This is option is useful when one wants to “touch symlink” and run make.</p>
+<pre><code>`-L'
+`--check-symlink-times'
+
+    On systems that support symbolic links, this option causes make to consider the timestamps
+    on any symbolic links in addition to the timestamp on the file referenced by those links.
+    When this option is provided, the most recent timestamp among the file and the symbolic
+    links is taken as the modification time for this target file.</code></pre>
         </div>
 
         <div class="column is-narrow menu">
@@ -103,6 +115,9 @@
                 </ul></li>
                 <li><a href="#parallelizing-recursive-make">Parallelizing recursive make<span> #</span></a><ul>
                 <li><a href="#related-reading-1">Related reading<span> #</span></a></li>
+                </ul></li>
+                <li><a href="#miscellaneous">Miscellaneous<span> #</span></a><ul>
+                <li><a href="#handling-symbolic-links">Handling symbolic links<span> #</span></a></li>
                 </ul></li>
                 </ul>
                 </div>
