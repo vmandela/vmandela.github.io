@@ -53,34 +53,36 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>This blog is generated using Hakyll. Hakyll provides a way to annotate posts with tags and generate a list of pages with the same tag. I followed the excellent guide from <a href="https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html" class="uri">https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html</a> and added the tags feature to the blog. The html produced for the tags is quite bare</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="kw">&gt;</span>blog setup<span class="kw">&lt;/a&gt;</span>,</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="kw">&gt;</span>haskell<span class="kw">&lt;/a&gt;</span>,</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="kw">&gt;</span>hakyll<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
+<p>This blog is generated using Hakyll. Hakyll provides a way to annotate posts with tags and generate a list of pages with the same tag. I followed the excellent guide from <a href="https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html" class="uri">https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html</a> and added
+the tags feature to the blog. The html produced for the tags is quite bare</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="kw">&gt;</span>blog setup<span class="kw">&lt;/a&gt;</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="kw">&gt;</span>haskell<span class="kw">&lt;/a&gt;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="kw">&gt;</span>hakyll<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
 <p><a href="../../tags/blog%20setup.html">blog setup</a>, <a href="../../tags/haskell.html">haskell</a>, <a href="../../tags/hakyll.html">hakyll</a></p>
 <p>and I wanted to style it using bulma “is-link” and “tag” attributes.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>blog setup<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>haskell<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="ot"> class=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>hakyll<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>blog setup<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/haskell.html&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>haskell<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;tag is-link&quot;</span><span class="kw">&gt;</span>hakyll<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
 <p><a href="../../tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="../../tags/haskell.html" class="tag is-link">haskell</a> <a href="../../tags/hakyll.html" class="tag is-link">hakyll</a></p>
 <p>While this can be done with jquery after the page is loaded, I wanted to do the styling during site generation. I took this as an opportunity to play with Hakyll.</p>
 <p>The html for the tags is added to the Hakyll post context by the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/Hakyll-Web-Tags.html#v:tagsField"><code>tagsField</code></a> function.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>postCtxWithTags tags <span class="ot">=</span> tagsField <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>postCtxWithTags tags <span class="ot">=</span> tagsField <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span></code></pre></div>
 <p>Hakyll also offers a <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/Hakyll-Web-Tags.html#v:tagsFieldWith"><code>tagsFieldWith</code></a> function where the HTML generation can be customized. Below is the code I ended up with.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>postCtxWithTags tags <span class="ot">=</span> tagsFieldBulma <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="ot">tagsFieldBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> a</span>
-<span id="cb4-6"><a href="#cb4-6"></a>tagsFieldBulma <span class="ot">=</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>  tagsFieldWith getTags simpleRenderLinkBulma (<span class="fu">mconcat</span> <span class="op">.</span> intersperse <span class="st">&quot; &quot;</span>)</span>
-<span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="ot">simpleRenderLinkBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> (<span class="dt">Maybe</span> <span class="dt">FilePath</span>) <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">H.Html</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>simpleRenderLinkBulma _ <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a>simpleRenderLinkBulma tag (<span class="dt">Just</span> filePath) <span class="ot">=</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>  <span class="dt">Just</span> <span class="op">$</span> H.a <span class="op">!</span> A.href (toValue <span class="op">$</span> toUrl filePath) <span class="op">!</span> A.class_ <span class="st">&quot;tag is-link&quot;</span> <span class="op">$</span> toHtml tag</span></code></pre></div>
-<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>. The link to full source is here <a href="../../static_root/Tags.hs">Tags.hs</a>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>postCtxWithTags tags <span class="ot">=</span> tagsFieldBulma <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">tagsFieldBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> a</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tagsFieldBulma <span class="ot">=</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  tagsFieldWith getTags simpleRenderLinkBulma (<span class="fu">mconcat</span> <span class="op">.</span> intersperse <span class="st">&quot; &quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ot">simpleRenderLinkBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> (<span class="dt">Maybe</span> <span class="dt">FilePath</span>) <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">H.Html</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma _ <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma tag (<span class="dt">Just</span> filePath) <span class="ot">=</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Just</span> <span class="op">$</span> H.a <span class="op">!</span> A.href (toValue <span class="op">$</span> toUrl filePath) <span class="op">!</span> A.class_ <span class="st">&quot;tag is-link&quot;</span> <span class="op">$</span> toHtml tag</span></code></pre></div>
+<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>.
+The link to full source is here <a href="../../static_root/Tags.hs">Tags.hs</a>.</p>
         </div>
 
         <div class="column is-narrow menu">
@@ -99,7 +101,7 @@
 
             <div id="footer">
                 <div class="has-text-centered">
-                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2020<br />
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2022<br />
                     This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
                     Site generated by
                     <a href="http://jaspervdj.be/hakyll">Hakyll</a>.

@@ -14,13 +14,22 @@ where
 
 import           Text.Pandoc
 import           Text.Pandoc.Walk
+#if MIN_VERSION_pandoc_types(1,21,0)
+import Data.Text (pack, unpack, empty, singleton, Text, cons)
+#endif
 
 -- Create an anchor based on the string
 -- add anchorjs-link class for CSS manipulations
 -- Use "#" as the display for the anchor
 -- Append linkId to "#" to create the link target
+
+#if MIN_VERSION_pandoc_types(1,21,0)
+addAnchor :: Text -> Inline
+addAnchor linkId = Link (empty, [( pack "anchorjs-link" )], []) [Str (pack " #")] ( (cons  '#'  linkId), empty)
+#else
 addAnchor :: String -> Inline
 addAnchor linkId = Link ("", ["anchorjs-link"], []) [Str " #"] ("#" ++ linkId, "")
+#endif
 
 -- Add a anchor link to each html header
 -- Leave everything else as is

@@ -53,15 +53,21 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p><a href="http://www.mcternan.me.uk/mscgen/">Mscgen</a> is a nifty tool for generating <a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagrams</a>. One feature I miss in Mscgen is the ability to add notes within the sequence diagram. I use some of the existing features of mscgen to add notes. Sample output is below.</p>
+<p><a href="http://www.mcternan.me.uk/mscgen/">Mscgen</a> is a nifty tool for generating
+<a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagrams</a>.
+One feature I miss in Mscgen is the ability to add notes within the
+sequence diagram. I use some of the existing features of mscgen to add notes.
+Sample output is below.</p>
 <figure>
-<img src="../../images/annotate.svg" alt /><figcaption>Annotated mscgen output</figcaption>
+<img src="../../images/annotate.svg" alt="Annotated mscgen output" /><figcaption aria-hidden="true">Annotated mscgen output</figcaption>
 </figure>
 <p>The tricks/hacks used are</p>
 <ol type="1">
-<li><p>Use an invisible entity for notes. The linecolor is set to white and label set to empty to prevent the entity from showing up in the output.</p>
+<li><p>Use an invisible entity for notes. The linecolor is set to white and label
+set to empty to prevent the entity from showing up in the output.</p>
 <pre><code>A15 [label=&quot;A15&quot;], m4 [label=&quot;M4&quot;], notes [linecolor=&quot;white&quot;,label=&quot;&quot;];</code></pre></li>
-<li><p>Create a box within the notes entity with the desired annotation. Set the line color to white to hide the box boundary.</p>
+<li><p>Create a box within the notes entity with the desired annotation. Set the
+line color to white to hide the box boundary.</p>
 <pre><code>notes box notes [label=&quot;M4 executes in parallel with A15 loading Linux&quot;,
 linecolor=&quot;white&quot;];</code></pre></li>
 <li><p>Place the annotation box at the same level as the desired operation.</p>
@@ -77,15 +83,18 @@ linecolor=&quot;white&quot;];</code></pre></li>
 <li>the tool being text based</li>
 <li>fast execution</li>
 </ul>
-<p>I use <a href="http://iwatch.sourceforge.net/index.html"><code>iwatch</code></a> to monitor the filesystem for any changes and running mscgen on any modified files. I use <code>eog</code> displaying the output as it reflects any image file changes immediately, offering a live view.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>$ <span class="fu">cat</span> ~/handle-iwatch.sh</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">if [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .msc$<span class="kw"> ]]</span>; <span class="kw">then</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a>    <span class="ex">mscgen</span> -Tsvg <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">elif [[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> =~ .dot$<span class="kw"> ]]</span>; <span class="kw">then</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>    <span class="ex">dot</span> -Tpng <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${1/</span>.dot<span class="va">/</span>.png<span class="va">}</span><span class="st">&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">fi</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>$ <span class="ex">iwatch</span> -c <span class="st">&quot;/home/vmandela/handle-iwatch.sh %f&quot;</span> -e modify /home/vmandela/work/img</span></code></pre></div>
+<p>I use <a href="http://iwatch.sourceforge.net/index.html"><code>iwatch</code></a> to monitor the
+filesystem for any changes and running mscgen on any modified files.
+I use <code>eog</code> displaying the output as it reflects any image file changes
+immediately, offering a live view.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/handle-iwatch.sh</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="ot">=~</span> <span class="pp">.</span><span class="ss">msc</span><span class="op">$</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="ex">mscgen</span> <span class="at">-Tsvg</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="ot">=~</span> <span class="pp">.</span><span class="ss">dot</span><span class="op">$</span> <span class="kw">]];</span> <span class="cf">then</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">dot</span> <span class="at">-Tpng</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${1</span><span class="op">/</span><span class="ss">.dot</span><span class="op">/</span>.png<span class="va">}</span><span class="st">&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> iwatch <span class="at">-c</span> <span class="st">&quot;/home/vmandela/handle-iwatch.sh %f&quot;</span> <span class="at">-e</span> modify /home/vmandela/work/img</span></code></pre></div>
         </div>
 
         <div class="column is-narrow menu">
@@ -113,7 +122,7 @@ linecolor=&quot;white&quot;];</code></pre></li>
 
             <div id="footer">
                 <div class="has-text-centered">
-                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2020<br />
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2022<br />
                     This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
                     Site generated by
                     <a href="http://jaspervdj.be/hakyll">Hakyll</a>.

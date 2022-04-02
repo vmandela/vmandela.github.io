@@ -53,32 +53,42 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>This blog is built with Hakyll. Hakyll uses Pandoc for markdown to html conversion. The blog breaks approximately once an year with a change to the underlying <a href="https://github.com/jgm/pandoc-types">pandoc-types</a>.</p>
-<p>One of the past breaking changes was the conversion basic text data type from <code>[Char]</code> to <code>Data.Text</code>. The change broke some of the filters I used in the blog. One of the filters was a function to strip the initial <code>/</code> from any resources used in the blog. Hakyll uses URLs with slash at the beginning ‘/’ for local images/resources. I used this filter to fixup the link to images to relative links before converting them into Word document or PDF format.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">stripSlash (x<span class="fu">:</span>xs)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="fu">|</span> <span class="ch">'/'</span> <span class="fu">==</span> x <span class="fu">=</span> xs</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="fu">|</span> otherwise <span class="fu">=</span> [x] <span class="fu">++</span> xs</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">stripSlash _ <span class="fu">=</span> []</a></code></pre></div>
-<p>I was looking for a way to modify the <code>stripSlash</code> function to support both <code>[Char]</code> and <code>Data.Text</code> data type. Thats how I discovered Haskells ad-hoc polymorphism. This required defining a typeclass and creating an instance of it for each data type I needed to support.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ot">{-# LANGUAGE TypeSynonymInstances #-}</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="ot">{-# LANGUAGE InstanceSigs #-}</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">class</span> <span class="dt">StringUtils</span> a <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="ot">  stripSlash ::</span> a <span class="ot">-&gt;</span> a</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">String</span> <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="ot">  stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11">  stripSlash (x<span class="fu">:</span>xs)</a>
-<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="fu">|</span> <span class="ch">'/'</span> <span class="fu">==</span> x <span class="fu">=</span> xs</a>
-<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="fu">|</span> otherwise <span class="fu">=</span> [x] <span class="fu">++</span> xs</a>
-<a class="sourceLine" id="cb2-14" data-line-number="14">  stripSlash _ <span class="fu">=</span> []</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">T.Text</span> <span class="kw">where</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="ot">  stripSlash ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">  stripSlash x <span class="fu">=</span> T.pack (stripSlash <span class="fu">$</span> T.unpack x)</a></code></pre></div>
+<p>This blog is built with Hakyll. Hakyll uses Pandoc for markdown to html
+conversion. The blog breaks approximately once an year with a change to the
+underlying <a href="https://github.com/jgm/pandoc-types">pandoc-types</a>.</p>
+<p>One of the past breaking changes was the conversion basic text data type from
+<code>[Char]</code> to <code>Data.Text</code>. The change broke some of the filters I used in the
+blog. One of the filters was a function to strip the initial <code>/</code> from any
+resources used in the blog. Hakyll uses URLs with slash at the beginning ‘/’ for
+local images/resources. I used this filter to fixup the link to images to relative
+links before converting them into Word document or PDF format.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>stripSlash (x<span class="op">:</span>xs)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="ch">'/'</span> <span class="op">==</span> x <span class="ot">=</span> xs</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> [x] <span class="op">++</span> xs</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>stripSlash _ <span class="ot">=</span> []</span></code></pre></div>
+<p>I was looking for a way to modify the <code>stripSlash</code> function to support both
+<code>[Char]</code> and <code>Data.Text</code> data type. Thats how I discovered Haskells ad-hoc
+polymorphism. This required defining a typeclass and creating an instance of it
+for each data type I needed to support.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE TypeSynonymInstances #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE InstanceSigs #-}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">StringUtils</span> a <span class="kw">where</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">String</span> <span class="kw">where</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  stripSlash (x<span class="op">:</span>xs)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="ch">'/'</span> <span class="op">==</span> x <span class="ot">=</span> xs</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> [x] <span class="op">++</span> xs</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  stripSlash _ <span class="ot">=</span> []</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">T.Text</span> <span class="kw">where</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  stripSlash x <span class="ot">=</span> T.pack (stripSlash <span class="op">$</span> T.unpack x)</span></code></pre></div>
 <p>Here are a couple of links that helped me.</p>
 <ol type="1">
 <li><a href="https://stackoverflow.com/questions/12430660/creating-polymorphic-functions-in-haskell" class="uri">https://stackoverflow.com/questions/12430660/creating-polymorphic-functions-in-haskell</a></li>
@@ -86,7 +96,7 @@
 </ol>
 <p>I am one of todays lucky 10000. :-)</p>
 <figure>
-<img src="https://imgs.xkcd.com/comics/ten_thousand.png" alt="Lucky 10000" /><figcaption>Lucky 10000</figcaption>
+<img src="https://imgs.xkcd.com/comics/ten_thousand.png" alt="Lucky 10000" /><figcaption aria-hidden="true">Lucky 10000</figcaption>
 </figure>
         </div>
 
@@ -106,7 +116,7 @@
 
             <div id="footer">
                 <div class="has-text-centered">
-                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2020<br />
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2022<br />
                     This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
                     Site generated by
                     <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
