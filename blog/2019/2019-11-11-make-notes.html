@@ -62,10 +62,7 @@
 <pre><code>$(info CFLAGS=$(CFLAGS))</code></pre>
 <p>Similarly one can use the <code>error</code> and <code>warning</code> commands can be used for debugging.</p>
 <h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> #</a></h3>
-<p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake
-with enhanced tracing and a builtin debugger. I have been using remake as a
-replacement for make on my development machine and am yet to run into any
-issues.</p>
+<p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake with enhanced tracing and a builtin debugger. I have been using remake as a replacement for make on my development machine and am yet to run into any issues.</p>
 <pre><code>alias make=remake</code></pre>
 <p>Now you can use</p>
 <pre><code>make --trace</code></pre>
@@ -78,9 +75,7 @@ issues.</p>
 <li>Remake GitHub repository - <a href="https://github.com/rocky/remake" class="uri">https://github.com/rocky/remake</a></li>
 </ol>
 <h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> #</a></h2>
-<p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when
-invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise
-you might see warnings such as</p>
+<p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise you might see warnings such as</p>
 <pre><code>make[1]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.</code></pre>
 <h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> #</a></h3>
 <ol type="1">
@@ -90,11 +85,8 @@ you might see warnings such as</p>
 </ol>
 <h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> #</a></h2>
 <h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> #</a></h3>
-<p>When one of the dependencies is a symbolic link, make checks the modification time of the file
-referenced by the link. This is sensible behaviour and probably the reason it is not called out
-in the gnu make manual.</p>
-<p>There is also the “-L” option which causes make to consider the modification time of the symlink
-as well. This is option is useful when one wants to “touch symlink” and run make.</p>
+<p>When one of the dependencies is a symbolic link, make checks the modification time of the file referenced by the link. This is sensible behaviour and probably the reason it is not called out in the gnu make manual.</p>
+<p>There is also the “-L” option which causes make to consider the modification time of the symlink as well. This is option is useful when one wants to “touch symlink” and run make.</p>
 <pre><code>`-L'
 `--check-symlink-times'
 

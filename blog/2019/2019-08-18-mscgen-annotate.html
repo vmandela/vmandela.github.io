@@ -53,21 +53,15 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p><a href="http://www.mcternan.me.uk/mscgen/">Mscgen</a> is a nifty tool for generating
-<a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagrams</a>.
-One feature I miss in Mscgen is the ability to add notes within the
-sequence diagram. I use some of the existing features of mscgen to add notes.
-Sample output is below.</p>
+<p><a href="http://www.mcternan.me.uk/mscgen/">Mscgen</a> is a nifty tool for generating <a href="https://en.wikipedia.org/wiki/Sequence_diagram">sequence diagrams</a>. One feature I miss in Mscgen is the ability to add notes within the sequence diagram. I use some of the existing features of mscgen to add notes. Sample output is below.</p>
 <figure>
 <img src="../../images/annotate.svg" alt="Annotated mscgen output" /><figcaption aria-hidden="true">Annotated mscgen output</figcaption>
 </figure>
 <p>The tricks/hacks used are</p>
 <ol type="1">
-<li><p>Use an invisible entity for notes. The linecolor is set to white and label
-set to empty to prevent the entity from showing up in the output.</p>
+<li><p>Use an invisible entity for notes. The linecolor is set to white and label set to empty to prevent the entity from showing up in the output.</p>
 <pre><code>A15 [label=&quot;A15&quot;], m4 [label=&quot;M4&quot;], notes [linecolor=&quot;white&quot;,label=&quot;&quot;];</code></pre></li>
-<li><p>Create a box within the notes entity with the desired annotation. Set the
-line color to white to hide the box boundary.</p>
+<li><p>Create a box within the notes entity with the desired annotation. Set the line color to white to hide the box boundary.</p>
 <pre><code>notes box notes [label=&quot;M4 executes in parallel with A15 loading Linux&quot;,
 linecolor=&quot;white&quot;];</code></pre></li>
 <li><p>Place the annotation box at the same level as the desired operation.</p>
@@ -83,10 +77,7 @@ linecolor=&quot;white&quot;];</code></pre></li>
 <li>the tool being text based</li>
 <li>fast execution</li>
 </ul>
-<p>I use <a href="http://iwatch.sourceforge.net/index.html"><code>iwatch</code></a> to monitor the
-filesystem for any changes and running mscgen on any modified files.
-I use <code>eog</code> displaying the output as it reflects any image file changes
-immediately, offering a live view.</p>
+<p>I use <a href="http://iwatch.sourceforge.net/index.html"><code>iwatch</code></a> to monitor the filesystem for any changes and running mscgen on any modified files. I use <code>eog</code> displaying the output as it reflects any image file changes immediately, offering a live view.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/handle-iwatch.sh</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">[[</span> <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> <span class="ot">=~</span> <span class="pp">.</span><span class="ss">msc</span><span class="op">$</span> <span class="kw">]];</span> <span class="cf">then</span></span>

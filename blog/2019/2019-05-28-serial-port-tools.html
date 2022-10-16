@@ -53,26 +53,19 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>This page lists a set of tips that I have collected over the years using serial
-port for interacting with embedded boards.</p>
+<p>This page lists a set of tips that I have collected over the years using serial port for interacting with embedded boards.</p>
 <h2 id="minicom">Minicom<a href="#minicom" class="anchorjs-link"> #</a></h2>
 <ol type="1">
 <li><p>Use <code>minicom -w</code> to start minicom with line wrapping enabled.</p></li>
-<li><p>Add yourself to the ‘dialout’ group to open Serial ports without using
-<code>sudo</code>. Remember to logout and login for the newly added group membership to
-take effect.</p>
+<li><p>Add yourself to the ‘dialout’ group to open Serial ports without using <code>sudo</code>. Remember to logout and login for the newly added group membership to take effect.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo adduser vmandela dialout</span></code></pre></div></li>
 <li><p>Use <code>minicom -C log.txt</code> to the UART port output.</p></li>
-<li><p>Hit <code>Ctrl+a</code>,<code>N</code> to toggle timestamps in minicom. I normally use
-<a href="#grabserial">GrabSerial</a> instead if I need timing information from uart logs.</p></li>
+<li><p>Hit <code>Ctrl+a</code>,<code>N</code> to toggle timestamps in minicom. I normally use <a href="#grabserial">GrabSerial</a> instead if I need timing information from uart logs.</p></li>
 </ol>
 <h3 id="minicom-config-files">Minicom config files<a href="#minicom-config-files" class="anchorjs-link"> #</a></h3>
 <ol type="1">
-<li><p>The system wide configuration file for minicom is in
-<code>/etc/minicom/minirc.dfl</code>. You can override the system configuration by
-creating a config file at <code>~/.minirc.dfl</code>.</p></li>
-<li><p>To open a specific port by name(say usb0), create a file <code>~/.minirc.usb0</code> and
-include all the required configuration parameters in it.</p>
+<li><p>The system wide configuration file for minicom is in <code>/etc/minicom/minirc.dfl</code>. You can override the system configuration by creating a config file at <code>~/.minirc.dfl</code>.</p></li>
+<li><p>To open a specific port by name(say usb0), create a file <code>~/.minirc.usb0</code> and include all the required configuration parameters in it.</p>
 <pre><code>$ cat ~/.minirc.usb0
 pu port             /dev/ttyUSB0
 pu baudrate         115200
@@ -85,9 +78,7 @@ pu stopbits         1</code></pre>
 <pre><code>$ minicom -D /dev/ttyUSB0</code></pre></li>
 </ol>
 <h2 id="use-byobu-for-multiple-serial-ports">Use Byobu for multiple serial ports<a href="#use-byobu-for-multiple-serial-ports" class="anchorjs-link"> #</a></h2>
-<p>For boards which have multiple UART outputs, I use byobu + tmux to open all the UART ports
-in one command. The boards usually have multiple UART’s multiplexed on to a single USB port
-using an <a href="https://www.ftdichip.com/Products/ICs/FT4232H.htm">FTDI chip</a>.</p>
+<p>For boards which have multiple UART outputs, I use byobu + tmux to open all the UART ports in one command. The boards usually have multiple UART’s multiplexed on to a single USB port using an <a href="https://www.ftdichip.com/Products/ICs/FT4232H.htm">FTDI chip</a>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> cat ~/.byobu/windows.tmux.evm1</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">new-session</span> <span class="at">-n</span> port0 <span class="at">-c</span> /home/vmandela/work/ minicom <span class="at">-c</span> on <span class="at">-w</span> <span class="at">-C</span> port0.txt usb0<span class="kw">;</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">new-window</span> <span class="at">-n</span> port1 <span class="at">-c</span> /home/vmandela/work/ minicom  <span class="at">-c</span> on <span class="at">-w</span> <span class="at">-C</span> port1.txt usb1<span class="kw">;</span></span>
@@ -95,10 +86,7 @@ using an <a href="https://www.ftdichip.com/Products/ICs/FT4232H.htm">FTDI chip</
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">rename-session</span> EVM1-UART</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> BYOBU_WINDOWS=evm1 byobu</span></code></pre></div>
 <h2 id="grabserial">GrabSerial<a href="#grabserial" class="anchorjs-link"> #</a></h2>
-<p><a href="https://github.com/tbird20d/grabserial">Grabserial</a> is an amazing tool for capturing and timestamping
-UART logs. I used it extensively when performing boot time optimizations. Grabserial provides a running
-time stamp as well as delta from the previous line. This makes it easy to identify functionality
-consuming most time.</p>
+<p><a href="https://github.com/tbird20d/grabserial">Grabserial</a> is an amazing tool for capturing and timestamping UART logs. I used it extensively when performing boot time optimizations. Grabserial provides a running time stamp as well as delta from the previous line. This makes it easy to identify functionality consuming most time.</p>
 <p>You can install <code>grabserial</code> from ubuntu repositories.</p>
 <pre><code>$ sudo apt install grabserial</code></pre>
 <p>It is also available in the NixOS repositories.</p>
@@ -107,13 +95,7 @@ consuming most time.</p>
 <pre><code>$ grabserial -d /dev/ttyUSB5 -q 'test\(s\)' -e 120 | tee /home/vmandela/work/usb5.txt</code></pre>
 <p>Add the <code>-t</code> command line option to enable timestamping.</p>
 <h2 id="xmodem-file-transfer">XModem File transfer<a href="#xmodem-file-transfer" class="anchorjs-link"> #</a></h2>
-<p>One of the issues with <code>minicom</code> is the lack of scripting facilities. On
-Windows, <a href="https://ttssh2.osdn.jp/index.html.en">TeraTerm</a> offers scripting with
-its own <a href="https://ttssh2.osdn.jp/manual/en/macro/syntax/index.html">TTL</a>
-language. I did not find a viable alternative on Linux yet and had to use
-python to automate booting of an board over UART. Here is a python script that
-boots a <a href="http://www.ti.com/tool/TMDX654GPEVM">AM6 EVM</a> over UART. The script is
-based on the example at <a href="https://pypi.org/project/xmodem/">xmodem pypi page</a>.</p>
+<p>One of the issues with <code>minicom</code> is the lack of scripting facilities. On Windows, <a href="https://ttssh2.osdn.jp/index.html.en">TeraTerm</a> offers scripting with its own <a href="https://ttssh2.osdn.jp/manual/en/macro/syntax/index.html">TTL</a> language. I did not find a viable alternative on Linux yet and had to use python to automate booting of an board over UART. Here is a python script that boots a <a href="http://www.ti.com/tool/TMDX654GPEVM">AM6 EVM</a> over UART. The script is based on the example at <a href="https://pypi.org/project/xmodem/">xmodem pypi page</a>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode py"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env python</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> serial</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>

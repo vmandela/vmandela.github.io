@@ -53,21 +53,14 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>Though I have been using emacs for few years now, I faced issues with
-controlling the indentation. Consider the below setting in vim to
-configure the indentation for all source files in a directory.</p>
+<p>Though I have been using emacs for few years now, I faced issues with controlling the indentation. Consider the below setting in vim to configure the indentation for all source files in a directory.</p>
 <ul>
 <li>Use tabs for indentation</li>
 <li>Treat tab width as 8 spaces</li>
 </ul>
 <pre><code>au BufEnter /code/kernel/*/*.[ch] setlocal tabstop=8 shiftwidth=8 noexpandtab</code></pre>
-<p>I tried <a href="https://github.com/jscheid/dtrt-indent">dtrt-indent</a> which
-automatically configures indentation based on existing indentation in
-the file. This approach works well for existing source files but does
-not configure indentation for new source files.</p>
-<p>I settled on replicating the vim behaviour exactly by using <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables">per
-directory local
-variables</a>.</p>
+<p>I tried <a href="https://github.com/jscheid/dtrt-indent">dtrt-indent</a> which automatically configures indentation based on existing indentation in the file. This approach works well for existing source files but does not configure indentation for new source files.</p>
+<p>I settled on replicating the vim behaviour exactly by using <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables">per directory local variables</a>.</p>
 <pre><code>(dir-locals-set-class-variables
  'kernel-src-directory
  '(
