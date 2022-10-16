@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Venkat Mandela - Notes on Python</title>
+        <title>Venkat Mandela - Switching blog to Atkinson Hyperlegible font</title>
         <link rel="stylesheet" href="../../css/bulma-atkinson-0.9.4-23-gb3e32a77daca.css">
         <link rel="stylesheet" href="../../css/custom.css">
         <link rel="stylesheet" href="../../css/syntax.css">
@@ -39,12 +39,12 @@
                 </div>
             </div>
         </nav>
-            <h1 class="title"> Notes on Python </h1>
+            <h1 class="title"> Switching blog to Atkinson Hyperlegible font </h1>
             <div class="info">
-    Posted on November 11, 2019
+    Posted on October 16, 2022
     
   |
-        <a href="../../tags/python.html" class="tag is-link">python</a>
+        <a href="../../tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="../../tags/css.html" class="tag is-link">css</a> <a href="../../tags/font.html" class="tag is-link">font</a>
     
 </div>
 
@@ -53,29 +53,13 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<h2 id="setting-log-level-dynamically">Setting log level dynamically<a href="#setting-log-level-dynamically" class="anchorjs-link"> #</a></h2>
-<p>If you want to change the log level for one iteration of a loop or one call of a function, it can be done by calling <code>setLevel</code> on the current logger instance.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logging.error(<span class="st">&quot;This statement will be shown&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This will not be shown&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;DEBUG&quot;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be shown&quot;</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;ERROR&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be hidden&quot;</span>)</span></code></pre></div>
-<p>This results in</p>
-<pre><code>ERROR:root:This statement will be shown
-DEBUG:root:This debug statement will be shown</code></pre>
-<h3 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> #</a></h3>
+<p>Ever since coming across the Atkinson Hyperlegible font <a href="https://brailleinstitute.org/freefont" class="uri">https://brailleinstitute.org/freefont</a>, I wanted to experiment on the blog with it. Switching the font in bulma was just following the documentation and using the right url for fonts from google fonts.</p>
 <ol type="1">
-<li>Logging module documentation - <a href="https://docs.python.org/3.8/library/logging.html" class="uri">https://docs.python.org/3.8/library/logging.html</a></li>
-<li>Logging HOWTO - <a href="https://docs.python.org/3.8/howto/logging.html" class="uri">https://docs.python.org/3.8/howto/logging.html</a></li>
+<li>Bulma documentation - <a href="https://bulma.io/documentation/customize/with-sass-cli/#6-add-your-own-bulma-styles" class="uri">https://bulma.io/documentation/customize/with-sass-cli/#6-add-your-own-bulma-styles</a></li>
+<li>Sass file to update the font - <a href="https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.sass" class="uri">https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.sass</a></li>
+<li>Resulting CSS - <a href="https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.css" class="uri">https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.css</a></li>
 </ol>
+<p>The blog looks good even though I say so myself.:-)</p>
         </div>
 
         <div class="column is-narrow menu">
@@ -85,18 +69,6 @@ DEBUG:root:This debug statement will be shown</code></pre>
                     <li> <a href="../../">Home</a> </li>
                     <li> <a href="../../about.html">About</a> </li>
                 </ul>
-                                <p class="menu-label">Sections</p>
-                <div class="menu-list">
-                <ul>
-                    <li> <a href="#">Top of the Page</a> </li>
-                </ul>
-                <ul>
-                <li><a href="#setting-log-level-dynamically">Setting log level dynamically<span> #</span></a>
-                <ul>
-                <li><a href="#related-reading">Related reading<span> #</span></a></li>
-                </ul></li>
-                </ul>
-                </div>
                             </div>
         </div>
 
