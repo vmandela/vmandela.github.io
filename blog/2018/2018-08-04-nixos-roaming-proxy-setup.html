@@ -54,21 +54,38 @@
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
 <p><strong>Note</strong> : This post assumes familiarity with NixOS <a href="https://nixos.org" class="uri">https://nixos.org</a></p>
-<p>One of the problems I faced when using NixOS is network access when moving my laptop between work environment and home environment. The office network needs a proxy for internet access while the home network is a direct connection.</p>
-<p>Normally this is not a problem. I can set the proxy variable in the shell I am in.</p>
+<p>One of the problems I faced when using NixOS is network access when moving my
+laptop between work environment and home environment. The office network
+needs a proxy for internet access while the home network is a direct
+connection.</p>
+<p>Normally this is not a problem. I can set the proxy variable in the
+shell I am in.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> export HTTP_PROXY=http://corporate.proxy.com:port</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> wget www.google.com</span></code></pre></div>
-<p>However this gets problematic when trying to install a new package. Package updates are performed by the Nix daemon. The proxy settings for Nix daemon are derived from nixos configuration [2].</p>
+<p>However this gets problematic when trying to install a new package. Package
+updates are performed by the Nix daemon. The proxy settings for Nix daemon
+are derived from nixos configuration [2].</p>
 <h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting<a href="#update-configuration-with-the-new-proxy-setting" class="anchorjs-link"> #</a></h2>
-<p>The first solution that I tried was updating nixos configuration after switching networks and rebuilding the configuration. This got tedious quickly. On top of it, rebuilding configuration without network access could fail [3].</p>
+<p>The first solution that I tried was updating nixos configuration after switching
+networks and rebuilding the configuration. This got tedious quickly. On top of
+it, rebuilding configuration without network access could fail [3].</p>
 <h2 id="other-options">Other Options<a href="#other-options" class="anchorjs-link"> #</a></h2>
 <p>After digging a bit more, I came across 3 more options.</p>
 <ol type="1">
-<li><p>Child configurations - These are new configurations that are built each time a nixos configuration is built. These are treated as a separate configuration from the base configuration, almost as a peer to it.</p>
-<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.clone" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.clone</a> for more information.</p></li>
-<li><p>Clone configurations - These are also new configurations that are built each time a nixos configuration is built but are treated as variations on top of a base configuration. This is the most suitable option for my usecase.</p>
-<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.children" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.children</a> for more information.</p></li>
-<li><p>Profiles - Profiles are system configurations that need to be explicitly built and are maintained separately from the default boot configuration. This is not suitable for my usecase as the configuration needs to be manually built to keep it up to date.</p></li>
+<li><p>Child configurations - These are new configurations that are built each time
+a nixos configuration is built. These are treated as a separate configuration
+from the base configuration, almost as a peer to it.</p>
+<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.clone" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.clone</a> for
+more information.</p></li>
+<li><p>Clone configurations - These are also new configurations that are built each
+time a nixos configuration is built but are treated as variations on top of
+a base configuration. This is the most suitable option for my usecase.</p>
+<p>See here <a href="https://nixos.org/nixos/manual/options.html#opt-nesting.children" class="uri">https://nixos.org/nixos/manual/options.html#opt-nesting.children</a> for
+more information.</p></li>
+<li><p>Profiles - Profiles are system configurations that need to be explicitly
+built and are maintained separately from the default boot configuration. This
+is not suitable for my usecase as the configuration needs to be manually
+built to keep it up to date.</p></li>
 </ol>
 <p>I decided to try the clone configuration as it was most suited to my usecase.</p>
 <h2 id="clone-configuration">Clone configuration<a href="#clone-configuration" class="anchorjs-link"> #</a></h2>
@@ -83,11 +100,17 @@ nesting.clone = [
 ]</code></pre>
 <p>After building the configuration once with</p>
 <pre><code>$ sudo nixos-rebuild switch</code></pre>
-<p>I could switch the proxy settings easily by switching from the parent configuration to the cloned configuration.</p>
+<p>I could switch the proxy settings easily by switching from the parent
+configuration to the cloned configuration.</p>
 <pre><code>$ sudo /run/current-system/fine-tune/child-1/bin/switch-to-configuration test</code></pre>
-<p>One minor inconvenience remained. I had no way of selecting the proxy configurations on boot. I discovered that this functionality existed at some point and was temporarily disabled during refactoring. I enabled this feature and filed a PR on Nixpkgs.</p>
+<p>One minor inconvenience remained. I had no way of selecting the proxy
+configurations on boot. I discovered that this functionality existed at some
+point and was temporarily disabled during refactoring. I enabled this
+feature and filed a PR on Nixpkgs.</p>
 <p><a href="https://github.com/NixOS/nixpkgs/pull/45345" class="uri">https://github.com/NixOS/nixpkgs/pull/45345</a></p>
-<p>This PR took almost an year to get merged due to the iterations on test cases and delays due to my work commitments. You should be able to select different proxy configurations from the boot loader menu from NixOS 19.09.</p>
+<p>This PR took almost an year to get merged due to the iterations on test cases
+and delays due to my work commitments. You should be able to select different
+proxy configurations from the boot loader menu from NixOS 19.09.</p>
 <h2 id="references">References<a href="#references" class="anchorjs-link"> #</a></h2>
 <ol type="1">
 <li>roaming laptop: network proxy configuration - <a href="https://github.com/NixOS/nixpkgs/issues/27535" class="uri">https://github.com/NixOS/nixpkgs/issues/27535</a></li>

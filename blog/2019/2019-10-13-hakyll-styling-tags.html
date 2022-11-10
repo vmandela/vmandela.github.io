@@ -53,7 +53,8 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>This blog is generated using Hakyll. Hakyll provides a way to annotate posts with tags and generate a list of pages with the same tag. I followed the excellent guide from <a href="https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html" class="uri">https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html</a> and added the tags feature to the blog. The html produced for the tags is quite bare</p>
+<p>This blog is generated using Hakyll. Hakyll provides a way to annotate posts with tags and generate a list of pages with the same tag. I followed the excellent guide from <a href="https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html" class="uri">https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html</a> and added
+the tags feature to the blog. The html produced for the tags is quite bare</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="kw">&gt;</span>blog setup<span class="kw">&lt;/a&gt;</span>,</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="kw">&gt;</span>haskell<span class="kw">&lt;/a&gt;</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="kw">&gt;</span>hakyll<span class="kw">&lt;/a&gt;</span></span></code></pre></div>
@@ -80,7 +81,8 @@
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma _ <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma tag (<span class="dt">Just</span> filePath) <span class="ot">=</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Just</span> <span class="op">$</span> H.a <span class="op">!</span> A.href (toValue <span class="op">$</span> toUrl filePath) <span class="op">!</span> A.class_ <span class="st">&quot;tag is-link&quot;</span> <span class="op">$</span> toHtml tag</span></code></pre></div>
-<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>. The link to full source is here <a href="../../static_root/Tags.hs">Tags.hs</a>.</p>
+<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>.
+The link to full source is here <a href="../../static_root/Tags.hs">Tags.hs</a>.</p>
         </div>
 
         <div class="column is-narrow menu">

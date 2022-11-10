@@ -53,13 +53,21 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>After years of using nixpkgs on ubuntu and nixos in virtual machine, I finally made the switch to using nixos as the primary OS on the home laptop. As the home laptop is shared, I used a dual boot configuration with Windows10 along side NixOS. Each OS is installed to a separate hard disk. The installation process was pleasantly uneventful.</p>
+<p>After years of using nixpkgs on ubuntu and nixos in virtual machine,
+I finally made the switch to using nixos as the primary OS on the
+home laptop.
+As the home laptop is shared, I used a dual boot configuration with
+Windows10 along side NixOS.
+Each OS is installed to a separate hard disk.
+The installation process was pleasantly uneventful.</p>
 <ol type="1">
-<li><p>The WiFi card was autodetected. WiFi configuration was easy once I discovered <code>nmcli</code>.</p>
+<li><p>The WiFi card was autodetected. WiFi configuration was easy once I
+discovered <code>nmcli</code>.</p>
 <pre><code># /etc/nixos/configuration.nix
 networking.networkmanager.enable = true; # Enable network manager</code></pre>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nmcli d wifi connect vmandela <span class="at">--ask</span></span></code></pre></div></li>
-<li><p>With grub os prober enabled, windows 10 showed up automatically in the bootloader menu.</p>
+<li><p>With grub os prober enabled, windows 10 showed up automatically
+in the bootloader menu.</p>
 <pre><code># /etc/nixos/configuration.nix
 # Use the systemd-boot EFI boot loader.
 boot.loader = {
@@ -72,19 +80,28 @@ boot.loader = {
                 useOSProber = true;
         };
 };</code></pre></li>
-<li><p>Windows 10 and NixOS treat the hardware clock differently. Windows 10 treats the hardware clock as local time while NixOS treats it as UTC. To resolve this difference, I had to switch NixOS to treat hardware clock as local time.</p>
+<li><p>Windows 10 and NixOS treat the hardware clock differently.
+Windows 10 treats the hardware clock as local time while
+NixOS treats it as UTC.
+To resolve this difference, I had to switch NixOS to treat
+hardware clock as local time.</p>
 <pre><code># /etc/nixos/configuration.nix
 # Set your time zone.
 time.timeZone = &quot;Asia/Kolkata&quot;;
 # Use hardware clock in local time instead of UTC
 # This is required for compatibility with windows
 time.hardwareClockInLocalTime = true;</code></pre></li>
-<li><p><a href="https://store.steampowered.com/">Steam</a> worked out of the box following the instructions in the <a href="https://nixos.org/nixpkgs/manual/#sec-steam-play">Nixpkgs Manual</a>.</p>
+<li><p><a href="https://store.steampowered.com/">Steam</a> worked out of the box following the
+instructions in the <a href="https://nixos.org/nixpkgs/manual/#sec-steam-play">Nixpkgs Manual</a>.</p>
 <pre><code># /etc/nixos/configuration.nix
 # Required for steam
 hardware.pulseaudio.support32Bit = true;
 hardware.opengl.driSupport32Bit = true;</code></pre></li>
-<li><p>Setting up <a href="https://www.nginx.com/">NGINX</a> required a little document hunting. I use NGINX for checking out my blog locally before pushing it to github. My usecase fell into the so simple it is undocumented category.</p>
+<li><p>Setting up <a href="https://www.nginx.com/">NGINX</a> required a little
+document hunting.
+I use NGINX for checking out my blog locally before pushing it
+to github.
+My usecase fell into the so simple it is undocumented category.</p>
 <pre><code># /etc/nixos/configuration.nix
 # Enable NGINX
 services.nginx = {
@@ -99,7 +116,9 @@ services.tlp.enable = true;
 
 # Battery power management
 services.upower.enable = true;</code></pre></li>
-<li><p>Getting the user environment setup was done by reusing dotfiles from the previous machine and using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></li>
+<li><p>Getting the user environment setup was done by reusing dotfiles
+from the previous machine and
+using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></li>
 </ol>
         </div>
 
