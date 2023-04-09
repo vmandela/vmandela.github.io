@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Venkat Mandela - Ubuntu 22.04 migration</title>
+        <link rel="stylesheet" href="../../css/bulma-atkinson-0.9.4-23-gb3e32a77daca.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/syntax.css">
+        <meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
+
+        <link rel="icon" type="image/svg+xml" href="../../images/favicon/favicon.svg" sizes="any" />
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-24x24.png" sizes="24x24">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-40x40.png" sizes="40x40">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-64x64.png" sizes="64x64">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-128x128.png" sizes="128x128">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-256x256.png" sizes="256x256">
+<link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+
+
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../../">Venkat Mandela</a>
+                <!-- navbar items, navbar burger... -->
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../">Home</a>
+                    <a class="navbar-item" href="../../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+            <h1 class="title"> Ubuntu 22.04 migration </h1>
+            <div class="info">
+    Posted on April  9, 2023
+    
+  |
+        <a href="../../tags/linux.html" class="tag is-link">linux</a> <a href="../../tags/yak%20shaving.html" class="tag is-link">yak shaving</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>Finally I found the gap at work to move my work laptop to ubuntu 22.04.</p>
+<ul>
+<li>I started with the ubuntu server iso instead of the desktop iso to keep unwanted features out. I had the laptop on ethernet as I was not sure if the wireless driver would be part of the iso.</li>
+<li>I went with Plasma Desktop/KDE as the window manager instead of my usual xmonad. Webex Teams is to blame.</li>
+<li>Using <a href="https://nixos.org/manual/nix/stable/installation/installing-binary.html#installing-a-binary-distribution">Nixpkgs</a> + <a href="https://rycee.gitlab.io/home-manager/">home-manager</a> along with dotfiles made it very easy to get the user space programs back.</li>
+</ul>
+<h1 id="detours">Detours<a href="#detours" class="anchorjs-link"> #</a></h1>
+<h2 id="sddm">sddm<a href="#sddm" class="anchorjs-link"> #</a></h2>
+<p>I installed nixpkgs in daemon mode. This creates a bunch of build users. I was looking for a way to hide the users in SDDM login screen.
+None of the options in the <a href="https://manpages.ubuntu.com/manpages/jammy/en/man5/sddm.conf.5.html">SDDM config file</a> seemed to take effect.
+Starting the sddm greeter in test mode seemed to use the configuration correctly.</p>
+<pre><code>&gt; sddm-greeter --test-mode</code></pre>
+<p>Reading the source did not help much either. Eventually I stumbled upon the solution that sddm configuration files need to be files and not symbolic links to files.
+I could not figure this out from the source but this restriction makes sense for a component that controls the login screen.</p>
+<p>The other irritation was sddm starting with a on-screen keyboard by default. I had to configure the <code>InputMethod</code> option to disable it.</p>
+<pre><code>[Users]
+HideShells=/sbin/nologin
+MaximumUid=20000
+MinimumUid=1000
+
+[X11]
+EnableHiDPI=true
+MinimumVT=7
+
+[General]
+
+# Input method module
+InputMethod=</code></pre>
+<h2 id="home-manager">home-manager<a href="#home-manager" class="anchorjs-link"> #</a></h2>
+<p>The change in configuration file location and format since 2021 led to a bit of head scratching. The config file location changed from
+<code>~/.config/nixpkgs/home.nix</code> to <code>~/.config/home-manager/home.nix</code>. I also had a mismatch between the nixpkgs channel and the home-manager channel.
+<code>nixpkgs</code> channel was set to master and I had to use the corresponding home-manager channel. Once the channels matched, the package installation was smooth.</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="../../">Home</a> </li>
+                    <li> <a href="../../about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#detours" id="toc-detours">Detours #</a>
+                <ul>
+                <li><a href="#sddm" id="toc-sddm">sddm #</a></li>
+                <li><a href="#home-manager" id="toc-home-manager">home-manager #</a></li>
+                </ul></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+
+            <div id="footer">
+                <div class="has-text-centered">
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2022<br />
+                    This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
+                    Site generated by
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+                    Styled using <a href="http://bulma.io/">Bulma</a>.<br />
+                </div>
+            </div>
+        </div>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
+    </body>
+</html>
