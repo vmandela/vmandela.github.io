@@ -85,6 +85,14 @@ InputMethod=</code></pre>
 <p>The change in configuration file location and format since 2021 led to a bit of head scratching. The config file location changed from
 <code>~/.config/nixpkgs/home.nix</code> to <code>~/.config/home-manager/home.nix</code>. I also had a mismatch between the nixpkgs channel and the home-manager channel.
 <code>nixpkgs</code> channel was set to master and I had to use the corresponding home-manager channel. Once the channels matched, the package installation was smooth.</p>
+<h2 id="nix">Nix<a href="#nix" class="anchorjs-link"> #</a></h2>
+<p>I am experimenting using Nix for installing fonts as well. This requires running <code>fc-cache</code> with the installation path as argument.</p>
+<pre><code>&gt; nix-env -iA nixpkgs.jetbrains-mono
+&gt; fc-cache -v $HOME/.nix-profile/share/fonts/</code></pre>
+<h2 id="dmesg">dmesg<a href="#dmesg" class="anchorjs-link"> #</a></h2>
+<p><code>dmesg</code> not being accessible to normal user was surprise coming from 18.04. Apparently the change was introduced in ubuntu 20.10.
+I had to set <code>kernel.dmesg_restrict = 0</code> in <code>/etc/sysctl.d/10-kernel-hardening.conf</code> to allow non-root users access to dmesg.</p>
+<p><a href="https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied#390187" class="uri">https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied#390187</a></p>
         </div>
 
         <div class="column is-narrow menu">
@@ -104,6 +112,8 @@ InputMethod=</code></pre>
                 <ul>
                 <li><a href="#sddm" id="toc-sddm">sddm #</a></li>
                 <li><a href="#home-manager" id="toc-home-manager">home-manager #</a></li>
+                <li><a href="#nix" id="toc-nix">Nix #</a></li>
+                <li><a href="#dmesg" id="toc-dmesg">dmesg #</a></li>
                 </ul></li>
                 </ul>
                 </div>
