@@ -75,6 +75,14 @@
 The entry point is referred to as crate root.</li>
 <li>Crate root can define modules. Module source can be at <code>src/mod_name.rs</code>.</li>
 <li>A module can define submodules. Submodules are found at <code>src/mod_name/submod_name.rs</code>.</li>
+<li>There is no makefile equivalent for a crate. The files to be compiled are inferred from the crate root.</li>
+<li>A workspace is a cargo supported way to develop multiple closely related packages together.</li>
+</ul>
+<p>At a high level,</p>
+<ul>
+<li>Workspace has multiple packages.</li>
+<li>One package has 1 library crate plus some related application.</li>
+<li>Each crate can define some modules and submodules.</li>
 </ul>
 <h2 id="kconfig">KConfig<a href="#kconfig" class="anchorjs-link"> #</a></h2>
 <h1 id="preprocessor">Preprocessor<a href="#preprocessor" class="anchorjs-link"> #</a></h1>
@@ -100,6 +108,10 @@ The entry point is referred to as crate root.</li>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        handle_others()<span class="op">;</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h1 id="links">Links<a href="#links" class="anchorjs-link"> #</a></h1>
+<ol type="1">
+<li>https://doc.rust-lang.org/book/appendix-04-useful-development-tools.html</li>
+</ol>
         </div>
 
         <div class="column is-narrow menu">
@@ -124,6 +136,7 @@ The entry point is referred to as crate root.</li>
                 <ul>
                 <li><a href="#conditional-compilation" id="toc-conditional-compilation">Conditional compilation #</a></li>
                 </ul></li>
+                <li><a href="#links" id="toc-links">Links #</a></li>
                 </ul>
                 </div>
                             </div>
