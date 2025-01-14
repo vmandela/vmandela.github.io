@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Venkat Mandela - Jujutsu DVCS Cheatsheet</title>
+        <link rel="stylesheet" href="../../css/bulma-atkinson-0.9.4-23-gb3e32a77daca.css">
+        <link rel="stylesheet" href="../../css/custom.css">
+        <link rel="stylesheet" href="../../css/syntax.css">
+        <meta name="google-site-verification" content="kMqcfvgZIKvYt2C0lIY9JpfxF2PvmAcIZA6QwBM8t6A" />
+
+        <link rel="icon" type="image/svg+xml" href="../../images/favicon/favicon.svg" sizes="any" />
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-24x24.png" sizes="24x24">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-40x40.png" sizes="40x40">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-64x64.png" sizes="64x64">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-128x128.png" sizes="128x128">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-192x192.png" sizes="192x192">
+<link rel="icon" type="image/png" href="../../images/favicon/favicon-256x256.png" sizes="256x256">
+<link rel="icon" type="image/x-icon" href="../../images/favicon/favicon.ico" />
+
+
+    </head>
+    <body>
+        <div class="container">
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="../../">Venkat Mandela</a>
+                <!-- navbar items, navbar burger... -->
+            </div>
+
+            <div class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item" href="../../">Home</a>
+                    <a class="navbar-item" href="../../about.html">About</a>
+                </div>
+            </div>
+        </nav>
+            <h1 class="title"> Jujutsu DVCS Cheatsheet </h1>
+            <div class="info">
+    Posted on January 12, 2025
+    
+  |
+        <a href="../../tags/git.html" class="tag is-link">git</a> <a href="../../tags/jujutsu.html" class="tag is-link">jujutsu</a> <a href="../../tags/version%20control.html" class="tag is-link">version control</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<h1 id="commands">Commands<a href="#commands" class="anchorjs-link"> #</a></h1>
+<h2 id="initialize">Initialize<a href="#initialize" class="anchorjs-link"> #</a></h2>
+<pre><code>$ jj git init --colocate</code></pre>
+<h2 id="garbage-collection">Garbage Collection<a href="#garbage-collection" class="anchorjs-link"> #</a></h2>
+<p>To garbage collect a jujutsu repo, use</p>
+<pre><code>$ jj util gc</code></pre>
+<p>or</p>
+<pre><code>$ jj util gc --expire now</code></pre>
+<h2 id="remove-jj-from-a-git-repo">Remove jj from a git repo<a href="#remove-jj-from-a-git-repo" class="anchorjs-link"> #</a></h2>
+<pre><code>$ rm -rf .jj
+$ git for-each-ref -- 'refs/jj/keep/*'
+$ git for-each-ref  --format='%(refname)' -- 'refs/jj/keep/*' | xargs -l1 git update-ref -d</code></pre>
+<h2 id="push-a-new-branch">Push a new branch<a href="#push-a-new-branch" class="anchorjs-link"> #</a></h2>
+<pre><code>$ jj bookmark set new_branch_name
+$ jj git push --allow-new</code></pre>
+<h2 id="push-an-update-to-an-existing-branch">Push an update to an existing branch<a href="#push-an-update-to-an-existing-branch" class="anchorjs-link"> #</a></h2>
+<p>If you have a tracking branch already</p>
+<pre><code>$ jj bookmark set old_branch_name
+$ jj git push</code></pre>
+<p>If you dont have a tracking branch already</p>
+<pre><code>$ jj bookmark track old_branch_name@origin
+$ jj bookmark set old_branch_name
+$ jj git push</code></pre>
+<h1 id="references">References<a href="#references" class="anchorjs-link"> #</a></h1>
+<ul>
+<li>JJ Git Command Equivalence Table - <a href="https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table" class="uri">https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table</a></li>
+</ul>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="../../">Home</a> </li>
+                    <li> <a href="../../about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#commands" id="toc-commands">Commands #</a>
+                <ul>
+                <li><a href="#initialize" id="toc-initialize">Initialize #</a></li>
+                <li><a href="#garbage-collection" id="toc-garbage-collection">Garbage Collection #</a></li>
+                <li><a href="#remove-jj-from-a-git-repo" id="toc-remove-jj-from-a-git-repo">Remove jj from a git repo #</a></li>
+                <li><a href="#push-a-new-branch" id="toc-push-a-new-branch">Push a new branch #</a></li>
+                <li><a href="#push-an-update-to-an-existing-branch" id="toc-push-an-update-to-an-existing-branch">Push an update to an existing branch #</a></li>
+                </ul></li>
+                <li><a href="#references" id="toc-references">References #</a></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+
+            <div id="footer">
+                <div class="has-text-centered">
+                    &copy; <a href="../../about.html">Venkateswara Rao Mandela</a> 2018-2025<br />
+                    This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0 International License</a>.<br />
+                    Site generated by
+                    <a href="http://jaspervdj.be/hakyll">Hakyll</a>.
+                    Styled using <a href="http://bulma.io/">Bulma</a>.<br />
+                </div>
+            </div>
+        </div>
+        <!--
+        <script src="/js/jquery-3.4.1.min.js"/>
+        <script src="/js/apply-styles.js"/>
+        -->
+    </body>
+</html>
