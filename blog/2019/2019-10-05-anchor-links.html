@@ -58,7 +58,7 @@
 They make it easy to get the link to a specific section in webpage to share with others.
 Just hover over a heading and get the clickable link with the URL of the heading.
 This page lists my experiments with adding Anchor links to this blog.</p>
-<h2 id="using-anchorjs">Using AnchorJS<a href="#using-anchorjs" class="anchorjs-link"> #</a></h2>
+<h2 id="using-anchorjs">Using AnchorJS<a href="#using-anchorjs" class="anchorjs-link"> </a></h2>
 <p>I used <a href="https://www.bryanbraun.com/anchorjs/">AnchorJS</a> in my first attempt to
 add anchor links. It was very easy to integrate.</p>
 <ol type="1">
@@ -77,7 +77,7 @@ location I used for the other style updates.</p>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a> }</span></code></pre></div></li>
 <li><p><a href="https://www.youtube.com/watch?v=YHzM4avGrKI">There is no Step 3</a></p></li>
 </ol>
-<h3 id="moving-away-from-anchorjs">Moving away from AnchorJS<a href="#moving-away-from-anchorjs" class="anchorjs-link"> #</a></h3>
+<h3 id="moving-away-from-anchorjs">Moving away from AnchorJS<a href="#moving-away-from-anchorjs" class="anchorjs-link"> </a></h3>
 <p>AnchorJS worked splendidly for my blog (for the audience of 1 😃). However
 the anchorJS website includes an explicit warning against calling
 <code>anchors.add()</code> in the <code>$(document).ready</code> call back.</p>
@@ -91,7 +91,7 @@ AnchorJS can add it to the page. For more details, see
 <p>This got me thinking. As my blog is static website, I figured I can
 add the anchors when building the website and remove the runtime
 component.</p>
-<h2 id="using-pandoc-for-anchor-links">Using Pandoc for Anchor Links<a href="#using-pandoc-for-anchor-links" class="anchorjs-link"> #</a></h2>
+<h2 id="using-pandoc-for-anchor-links">Using Pandoc for Anchor Links<a href="#using-pandoc-for-anchor-links" class="anchorjs-link"> </a></h2>
 <p>This blog is built using <a href="http://jaspervdj.be/hakyll">Hakyll</a>
 which uses <a href="https://pandoc.org/">Pandoc</a> to convert from
 Markdown to HTML.
@@ -134,10 +134,34 @@ and reveal them on hover.</p>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>Here are the links to <a href="../../static_root/AnchorJS.hs">haskell source</a>
 and <a href="../../css/custom.css">css file</a>.</p>
-<h2 id="references">References<a href="#references" class="anchorjs-link"> #</a></h2>
+<h2 id="fixing-the-table-of-contents-problem">Fixing the Table of Contents Problem<a href="#fixing-the-table-of-contents-problem" class="anchorjs-link"> </a></h2>
+<p>Sometime after I made the anchor links change, I upgraded the version on pandoc
+and hakyll I was using.
+This caused the “#” used the in the anchors to also show in the sidebar.
+The “#” showed up without any additional html element attached to it.</p>
+<p>I considered splitting the hakyll build pipeline into two</p>
 <ol type="1">
-<li>AnchorJS - <a href="https://www.bryanbraun.com/anchorjs/" class="uri">https://www.bryanbraun.com/anchorjs/</a></li>
-<li>Use of Mouse-Over Paragraph Marker in Headlines for Permalink - <a href="https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink" class="uri">https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink</a></li>
+<li>First pipeline generates the table of contents from markdown.</li>
+<li>Second pipeline applies the anchorlinks transforms and generates the body.</li>
+</ol>
+<p>Both the pipelines get combined to form the final output.</p>
+<p>Unfortunately my haskell/hakyll skills are not upto the mark.</p>
+<p>I used a simpler solution where the pandoc filter creates an empty link.
+The content of the lnk is populated with a “#” when the mouse hovers over
+the heading.
+This keeps the table of contents clean and the anchor links functional.</p>
+<h3 id="the-solution-css-based-approach">The Solution: CSS-Based Approach<a href="#the-solution-css-based-approach" class="anchorjs-link"> </a></h3>
+<p>Instead of including “#” in the HTML, use CSS to add it on hover:</p>
+<ol type="1">
+<li><p><strong>Pandoc filter</strong>: Add anchor links with a non-breaking space as content</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>addAnchor linkId <span class="ot">=</span> <span class="dt">Link</span> (<span class="st">&quot;&quot;</span>, [<span class="st">&quot;anchorjs-link&quot;</span>], []) [<span class="dt">Str</span> <span class="st">&quot;\160&quot;</span>] (<span class="st">&quot;#&quot;</span> <span class="op">++</span> linkId, <span class="st">&quot;&quot;</span>)</span></code></pre></div></li>
+<li><p><strong>CSS</strong>: Use <code>::after</code> pseudo-element to show “#” on hover</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.anchorjs-link</span><span class="in">::after</span> {</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot;#&quot;</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 id="references">References<a href="#references" class="anchorjs-link"> </a></h2></li>
+<li><p>AnchorJS - <a href="https://www.bryanbraun.com/anchorjs/" class="uri">https://www.bryanbraun.com/anchorjs/</a></p></li>
+<li><p>Use of Mouse-Over Paragraph Marker in Headlines for Permalink - <a href="https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink" class="uri">https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink</a></p></li>
 </ol>
         </div>
 
@@ -154,12 +178,15 @@ and <a href="../../css/custom.css">css file</a>.</p>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#using-anchorjs" id="toc-using-anchorjs">Using AnchorJS #</a>
+                <li><a href="#using-anchorjs" id="toc-using-anchorjs">Using AnchorJS </a>
                 <ul>
-                <li><a href="#moving-away-from-anchorjs" id="toc-moving-away-from-anchorjs">Moving away from AnchorJS #</a></li>
+                <li><a href="#moving-away-from-anchorjs" id="toc-moving-away-from-anchorjs">Moving away from AnchorJS </a></li>
                 </ul></li>
-                <li><a href="#using-pandoc-for-anchor-links" id="toc-using-pandoc-for-anchor-links">Using Pandoc for Anchor Links #</a></li>
-                <li><a href="#references" id="toc-references">References #</a></li>
+                <li><a href="#using-pandoc-for-anchor-links" id="toc-using-pandoc-for-anchor-links">Using Pandoc for Anchor Links </a></li>
+                <li><a href="#fixing-the-table-of-contents-problem" id="toc-fixing-the-table-of-contents-problem">Fixing the Table of Contents Problem </a>
+                <ul>
+                <li><a href="#the-solution-css-based-approach" id="toc-the-solution-css-based-approach">The Solution: CSS-Based Approach </a></li>
+                </ul></li>
                 </ul>
                 </div>
                             </div>

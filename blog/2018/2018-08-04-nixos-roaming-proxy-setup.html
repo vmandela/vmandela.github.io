@@ -66,11 +66,11 @@ shell I am in.</p>
 <p>However this gets problematic when trying to install a new package. Package
 updates are performed by the Nix daemon. The proxy settings for Nix daemon
 are derived from nixos configuration [2].</p>
-<h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting<a href="#update-configuration-with-the-new-proxy-setting" class="anchorjs-link"> #</a></h2>
+<h2 id="update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting<a href="#update-configuration-with-the-new-proxy-setting" class="anchorjs-link"> </a></h2>
 <p>The first solution that I tried was updating nixos configuration after switching
 networks and rebuilding the configuration. This got tedious quickly. On top of
 it, rebuilding configuration without network access could fail [3].</p>
-<h2 id="other-options">Other Options<a href="#other-options" class="anchorjs-link"> #</a></h2>
+<h2 id="other-options">Other Options<a href="#other-options" class="anchorjs-link"> </a></h2>
 <p>After digging a bit more, I came across 3 more options.</p>
 <ol type="1">
 <li><p>Child configurations - These are new configurations that are built each time
@@ -89,7 +89,7 @@ is not suitable for my usecase as the configuration needs to be manually
 built to keep it up to date.</p></li>
 </ol>
 <p>I decided to try the clone configuration as it was most suited to my usecase.</p>
-<h2 id="clone-configuration">Clone configuration<a href="#clone-configuration" class="anchorjs-link"> #</a></h2>
+<h2 id="clone-configuration">Clone configuration<a href="#clone-configuration" class="anchorjs-link"> </a></h2>
 <p>Adding the clone configuration to <code>/etc/nixos/configuration.nix</code> was straight forward.</p>
 <pre><code>boot.loader.grub.configurationName = &quot;Default&quot;;
 nesting.clone = [
@@ -112,7 +112,7 @@ feature and filed a PR on Nixpkgs.</p>
 <p>This PR took almost an year to get merged due to the iterations on test cases
 and delays due to my work commitments. You should be able to select different
 proxy configurations from the boot loader menu from NixOS 19.09.</p>
-<h2 id="references">References<a href="#references" class="anchorjs-link"> #</a></h2>
+<h2 id="references">References<a href="#references" class="anchorjs-link"> </a></h2>
 <ol type="1">
 <li>roaming laptop: network proxy configuration - <a href="https://github.com/NixOS/nixpkgs/issues/27535" class="uri">https://github.com/NixOS/nixpkgs/issues/27535</a></li>
 <li>Nix-daemon proxy setup - <a href="https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143" class="uri">https://github.com/NixOS/nixpkgs/issues/27535#issuecomment-317719143</a></li>
@@ -134,10 +134,10 @@ proxy configurations from the boot loader menu from NixOS 19.09.</p>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#update-configuration-with-the-new-proxy-setting" id="toc-update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting #</a></li>
-                <li><a href="#other-options" id="toc-other-options">Other Options #</a></li>
-                <li><a href="#clone-configuration" id="toc-clone-configuration">Clone configuration #</a></li>
-                <li><a href="#references" id="toc-references">References #</a></li>
+                <li><a href="#update-configuration-with-the-new-proxy-setting" id="toc-update-configuration-with-the-new-proxy-setting">Update configuration with the new proxy setting </a></li>
+                <li><a href="#other-options" id="toc-other-options">Other Options </a></li>
+                <li><a href="#clone-configuration" id="toc-clone-configuration">Clone configuration </a></li>
+                <li><a href="#references" id="toc-references">References </a></li>
                 </ul>
                 </div>
                             </div>

@@ -56,13 +56,13 @@
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
 <p>This is a collection of notes I have accumulated while working with make. The make manual is a good place to start looking for answers.</p>
 <p><a href="https://www.gnu.org/software/make/manual/make.html" class="uri">https://www.gnu.org/software/make/manual/make.html</a></p>
-<h2 id="debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> #</a></h2>
-<h2 id="gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> #</a></h2>
+<h2 id="debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> </a></h2>
+<h2 id="gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> </a></h2>
 <p>The <code>info</code> command can be used to dump information from makefile.</p>
 <p><a href="https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions" class="uri">https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions</a></p>
 <pre><code>$(info CFLAGS=$(CFLAGS))</code></pre>
 <p>Similarly one can use the <code>error</code> and <code>warning</code> commands can be used for debugging.</p>
-<h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> #</a></h3>
+<h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> </a></h3>
 <p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake
 with enhanced tracing and a builtin debugger. I have been using remake as a
 replacement for make on my development machine and am yet to run into any
@@ -72,25 +72,25 @@ issues.</p>
 <pre><code>make --trace</code></pre>
 <p>to get better information on why a target is being built/rebuilt.</p>
 <p>The <code>-B</code> option of remake triggers an unconditional rebuild of a specified target.</p>
-<h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> #</a></h4>
+<h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> </a></h4>
 <ol type="1">
 <li>Debugging makefiles with remake - <a href="https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf" class="uri">https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf</a></li>
 <li>Remake home page - <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a></li>
 <li>Remake GitHub repository - <a href="https://github.com/rocky/remake" class="uri">https://github.com/rocky/remake</a></li>
 </ol>
-<h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> #</a></h2>
+<h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> </a></h2>
 <p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when
 invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise
 you might see warnings such as</p>
 <pre><code>make[1]: warning: jobserver unavailable: using -j1.  Add '+' to parent make rule.</code></pre>
-<h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> #</a></h3>
+<h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> </a></h3>
 <ol type="1">
 <li>How the make variable works - <a href="https://www.gnu.org/software/make/manual/make.html#MAKE-Variable" class="uri">https://www.gnu.org/software/make/manual/make.html#MAKE-Variable</a></li>
 <li>GNUMake Jobserver Implementation - <a href="http://make.mad-scientist.net/papers/jobserver-implementation/" class="uri">http://make.mad-scientist.net/papers/jobserver-implementation/</a></li>
 <li>Recursive make considered harmful - <a href="http://aegis.sourceforge.net/auug97.pdf" class="uri">http://aegis.sourceforge.net/auug97.pdf</a></li>
 </ol>
-<h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> #</a></h2>
-<h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> #</a></h3>
+<h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> </a></h2>
+<h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> </a></h3>
 <p>When one of the dependencies is a symbolic link, make checks the modification time of the file
 referenced by the link. This is sensible behaviour and probably the reason it is not called out
 in the gnu make manual.</p>
@@ -118,18 +118,18 @@ as well. This is option is useful when one wants to “touch symlink” and run 
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#debugging-makefiles" id="toc-debugging-makefiles">Debugging makefiles #</a></li>
-                <li><a href="#gmake-info-command" id="toc-gmake-info-command">gmake info command #</a>
+                <li><a href="#debugging-makefiles" id="toc-debugging-makefiles">Debugging makefiles </a></li>
+                <li><a href="#gmake-info-command" id="toc-gmake-info-command">gmake info command </a>
                 <ul>
-                <li><a href="#remake" id="toc-remake">Remake #</a></li>
+                <li><a href="#remake" id="toc-remake">Remake </a></li>
                 </ul></li>
-                <li><a href="#parallelizing-recursive-make" id="toc-parallelizing-recursive-make">Parallelizing recursive make #</a>
+                <li><a href="#parallelizing-recursive-make" id="toc-parallelizing-recursive-make">Parallelizing recursive make </a>
                 <ul>
-                <li><a href="#related-reading-1" id="toc-related-reading-1">Related reading #</a></li>
+                <li><a href="#related-reading-1" id="toc-related-reading-1">Related reading </a></li>
                 </ul></li>
-                <li><a href="#miscellaneous" id="toc-miscellaneous">Miscellaneous #</a>
+                <li><a href="#miscellaneous" id="toc-miscellaneous">Miscellaneous </a>
                 <ul>
-                <li><a href="#handling-symbolic-links" id="toc-handling-symbolic-links">Handling symbolic links #</a></li>
+                <li><a href="#handling-symbolic-links" id="toc-handling-symbolic-links">Handling symbolic links </a></li>
                 </ul></li>
                 </ul>
                 </div>

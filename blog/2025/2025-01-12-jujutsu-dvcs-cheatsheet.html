@@ -54,22 +54,22 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<h1 id="commands">Commands<a href="#commands" class="anchorjs-link"> #</a></h1>
-<h2 id="initialize">Initialize<a href="#initialize" class="anchorjs-link"> #</a></h2>
+<h1 id="commands">Commands<a href="#commands" class="anchorjs-link"> </a></h1>
+<h2 id="initialize">Initialize<a href="#initialize" class="anchorjs-link"> </a></h2>
 <pre><code>$ jj git init --colocate</code></pre>
-<h2 id="garbage-collection">Garbage Collection<a href="#garbage-collection" class="anchorjs-link"> #</a></h2>
+<h2 id="garbage-collection">Garbage Collection<a href="#garbage-collection" class="anchorjs-link"> </a></h2>
 <p>To garbage collect a jujutsu repo, use</p>
 <pre><code>$ jj util gc</code></pre>
 <p>or</p>
 <pre><code>$ jj util gc --expire now</code></pre>
-<h2 id="remove-jj-from-a-git-repo">Remove jj from a git repo<a href="#remove-jj-from-a-git-repo" class="anchorjs-link"> #</a></h2>
+<h2 id="remove-jj-from-a-git-repo">Remove jj from a git repo<a href="#remove-jj-from-a-git-repo" class="anchorjs-link"> </a></h2>
 <pre><code>$ rm -rf .jj
 $ git for-each-ref -- 'refs/jj/keep/*'
 $ git for-each-ref  --format='%(refname)' -- 'refs/jj/keep/*' | xargs -l1 git update-ref -d</code></pre>
-<h2 id="push-a-new-branch">Push a new branch<a href="#push-a-new-branch" class="anchorjs-link"> #</a></h2>
+<h2 id="push-a-new-branch">Push a new branch<a href="#push-a-new-branch" class="anchorjs-link"> </a></h2>
 <pre><code>$ jj bookmark set new_branch_name
 $ jj git push --allow-new</code></pre>
-<h2 id="push-an-update-to-an-existing-branch">Push an update to an existing branch<a href="#push-an-update-to-an-existing-branch" class="anchorjs-link"> #</a></h2>
+<h2 id="push-an-update-to-an-existing-branch">Push an update to an existing branch<a href="#push-an-update-to-an-existing-branch" class="anchorjs-link"> </a></h2>
 <p>If you have a tracking branch already</p>
 <pre><code>$ jj bookmark set old_branch_name
 $ jj git push</code></pre>
@@ -77,7 +77,7 @@ $ jj git push</code></pre>
 <pre><code>$ jj bookmark track old_branch_name@origin
 $ jj bookmark set old_branch_name
 $ jj git push</code></pre>
-<h1 id="references">References<a href="#references" class="anchorjs-link"> #</a></h1>
+<h1 id="references">References<a href="#references" class="anchorjs-link"> </a></h1>
 <ul>
 <li>JJ Git Command Equivalence Table - <a href="https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table" class="uri">https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table</a></li>
 </ul>
@@ -96,15 +96,15 @@ $ jj git push</code></pre>
                     <li> <a href="#">Top of the Page</a> </li>
                 </ul>
                 <ul>
-                <li><a href="#commands" id="toc-commands">Commands #</a>
+                <li><a href="#commands" id="toc-commands">Commands </a>
                 <ul>
-                <li><a href="#initialize" id="toc-initialize">Initialize #</a></li>
-                <li><a href="#garbage-collection" id="toc-garbage-collection">Garbage Collection #</a></li>
-                <li><a href="#remove-jj-from-a-git-repo" id="toc-remove-jj-from-a-git-repo">Remove jj from a git repo #</a></li>
-                <li><a href="#push-a-new-branch" id="toc-push-a-new-branch">Push a new branch #</a></li>
-                <li><a href="#push-an-update-to-an-existing-branch" id="toc-push-an-update-to-an-existing-branch">Push an update to an existing branch #</a></li>
+                <li><a href="#initialize" id="toc-initialize">Initialize </a></li>
+                <li><a href="#garbage-collection" id="toc-garbage-collection">Garbage Collection </a></li>
+                <li><a href="#remove-jj-from-a-git-repo" id="toc-remove-jj-from-a-git-repo">Remove jj from a git repo </a></li>
+                <li><a href="#push-a-new-branch" id="toc-push-a-new-branch">Push a new branch </a></li>
+                <li><a href="#push-an-update-to-an-existing-branch" id="toc-push-an-update-to-an-existing-branch">Push an update to an existing branch </a></li>
                 </ul></li>
-                <li><a href="#references" id="toc-references">References #</a></li>
+                <li><a href="#references" id="toc-references">References </a></li>
                 </ul>
                 </div>
                             </div>
