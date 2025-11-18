@@ -139,7 +139,7 @@ and <a href="../../css/custom.css">css file</a>.</p>
 and hakyll I was using.
 This caused the “#” used the in the anchors to also show in the sidebar.
 The “#” showed up without any additional html element attached to it.</p>
-<p>I considered splitting the hakyll build pipeline into two</p>
+<p>To solve the problem, I considered splitting the hakyll build pipeline into two</p>
 <ol type="1">
 <li>First pipeline generates the table of contents from markdown.</li>
 <li>Second pipeline applies the anchorlinks transforms and generates the body.</li>
@@ -147,21 +147,19 @@ The “#” showed up without any additional html element attached to it.</p>
 <p>Both the pipelines get combined to form the final output.</p>
 <p>Unfortunately my haskell/hakyll skills are not upto the mark.</p>
 <p>I used a simpler solution where the pandoc filter creates an empty link.
-The content of the lnk is populated with a “#” when the mouse hovers over
+The content of the link is populated with a “#” when the mouse hovers over
 the heading.
 This keeps the table of contents clean and the anchor links functional.</p>
-<h3 id="the-solution-css-based-approach">The Solution: CSS-Based Approach<a href="#the-solution-css-based-approach" class="anchorjs-link"> </a></h3>
-<p>Instead of including “#” in the HTML, use CSS to add it on hover:</p>
-<ol type="1">
-<li><p><strong>Pandoc filter</strong>: Add anchor links with a non-breaking space as content</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>addAnchor linkId <span class="ot">=</span> <span class="dt">Link</span> (<span class="st">&quot;&quot;</span>, [<span class="st">&quot;anchorjs-link&quot;</span>], []) [<span class="dt">Str</span> <span class="st">&quot;\160&quot;</span>] (<span class="st">&quot;#&quot;</span> <span class="op">++</span> linkId, <span class="st">&quot;&quot;</span>)</span></code></pre></div></li>
-<li><p><strong>CSS</strong>: Use <code>::after</code> pseudo-element to show “#” on hover</p>
+<p>The pandoc filter adds anchor links with a non-breaking space as content</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>addAnchor linkId <span class="ot">=</span> <span class="dt">Link</span> (<span class="st">&quot;&quot;</span>, [<span class="st">&quot;anchorjs-link&quot;</span>], []) [<span class="dt">Str</span> <span class="st">&quot;\160&quot;</span>] (<span class="st">&quot;#&quot;</span> <span class="op">++</span> linkId, <span class="st">&quot;&quot;</span>)</span></code></pre></div>
+<p>The “#” is added on hover to the anchor link.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode css"><code class="sourceCode css"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.anchorjs-link</span><span class="in">::after</span> {</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">content</span><span class="ch">:</span> <span class="st">&quot;#&quot;</span><span class="op">;</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<h2 id="references">References<a href="#references" class="anchorjs-link"> </a></h2></li>
-<li><p>AnchorJS - <a href="https://www.bryanbraun.com/anchorjs/" class="uri">https://www.bryanbraun.com/anchorjs/</a></p></li>
-<li><p>Use of Mouse-Over Paragraph Marker in Headlines for Permalink - <a href="https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink" class="uri">https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink</a></p></li>
+<h2 id="references">References<a href="#references" class="anchorjs-link"> </a></h2>
+<ol type="1">
+<li>AnchorJS - <a href="https://www.bryanbraun.com/anchorjs/" class="uri">https://www.bryanbraun.com/anchorjs/</a></li>
+<li>Use of Mouse-Over Paragraph Marker in Headlines for Permalink - <a href="https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink" class="uri">https://ux.stackexchange.com/questions/36304/use-of-mouse-over-paragraph-marker-in-headlines-for-permalink</a></li>
 </ol>
         </div>
 
@@ -183,10 +181,8 @@ This keeps the table of contents clean and the anchor links functional.</p>
                 <li><a href="#moving-away-from-anchorjs" id="toc-moving-away-from-anchorjs">Moving away from AnchorJS </a></li>
                 </ul></li>
                 <li><a href="#using-pandoc-for-anchor-links" id="toc-using-pandoc-for-anchor-links">Using Pandoc for Anchor Links </a></li>
-                <li><a href="#fixing-the-table-of-contents-problem" id="toc-fixing-the-table-of-contents-problem">Fixing the Table of Contents Problem </a>
-                <ul>
-                <li><a href="#the-solution-css-based-approach" id="toc-the-solution-css-based-approach">The Solution: CSS-Based Approach </a></li>
-                </ul></li>
+                <li><a href="#fixing-the-table-of-contents-problem" id="toc-fixing-the-table-of-contents-problem">Fixing the Table of Contents Problem </a></li>
+                <li><a href="#references" id="toc-references">References </a></li>
                 </ul>
                 </div>
                             </div>
