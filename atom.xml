@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>Venkat Mandela's Blog</title>
+    <link href="https://vmandela.com/atom.xml" rel="self" />
+    <link href="https://vmandela.com" />
+    <id>https://vmandela.com/atom.xml</id>
+    <author>
+        <name>Venkat Mandela</name>
+        
+        <email>venkat.mandela@gmail.com</email>
+        
+    </author>
+    <updated>2025-01-12T00:00:00Z</updated>
+    <entry>
+    <title>Jujutsu DVCS Cheatsheet</title>
+    <link href="https://vmandela.com/blog/2025/2025-01-12-jujutsu-dvcs-cheatsheet.html" />
+    <id>https://vmandela.com/blog/2025/2025-01-12-jujutsu-dvcs-cheatsheet.html</id>
+    <published>2025-01-12T00:00:00Z</published>
+    <updated>2025-01-12T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on January 12, 2025
+    
+  |
+        <a href="/tags/git.html" class="tag is-link">git</a> <a href="/tags/jujutsu.html" class="tag is-link">jujutsu</a> <a href="/tags/version%20control.html" class="tag is-link">version control</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<h1 id="commands">Commands<a href="#commands" class="anchorjs-link"> </a></h1>
+<h2 id="initialize">Initialize<a href="#initialize" class="anchorjs-link"> </a></h2>
+<pre><code>$ jj git init --colocate</code></pre>
+<h2 id="garbage-collection">Garbage Collection<a href="#garbage-collection" class="anchorjs-link"> </a></h2>
+<p>To garbage collect a jujutsu repo, use</p>
+<pre><code>$ jj util gc</code></pre>
+<p>or</p>
+<pre><code>$ jj util gc --expire now</code></pre>
+<h2 id="remove-jj-from-a-git-repo">Remove jj from a git repo<a href="#remove-jj-from-a-git-repo" class="anchorjs-link"> </a></h2>
+<pre><code>$ rm -rf .jj
+$ git for-each-ref -- &#39;refs/jj/keep/*&#39;
+$ git for-each-ref  --format=&#39;%(refname)&#39; -- &#39;refs/jj/keep/*&#39; | xargs -l1 git update-ref -d</code></pre>
+<h2 id="push-a-new-branch">Push a new branch<a href="#push-a-new-branch" class="anchorjs-link"> </a></h2>
+<pre><code>$ jj bookmark set new_branch_name
+$ jj git push --allow-new</code></pre>
+<h2 id="push-an-update-to-an-existing-branch">Push an update to an existing branch<a href="#push-an-update-to-an-existing-branch" class="anchorjs-link"> </a></h2>
+<p>If you have a tracking branch already</p>
+<pre><code>$ jj bookmark set old_branch_name
+$ jj git push</code></pre>
+<p>If you dont have a tracking branch already</p>
+<pre><code>$ jj bookmark track old_branch_name@origin
+$ jj bookmark set old_branch_name
+$ jj git push</code></pre>
+<h1 id="references">References<a href="#references" class="anchorjs-link"> </a></h1>
+<ul>
+<li>JJ Git Command Equivalence Table - <a href="https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table" class="uri">https://jj-vcs.github.io/jj/latest/git-comparison/#command-equivalence-table</a></li>
+</ul>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#commands" id="toc-commands">Commands </a>
+                <ul>
+                <li><a href="#initialize" id="toc-initialize">Initialize </a></li>
+                <li><a href="#garbage-collection" id="toc-garbage-collection">Garbage Collection </a></li>
+                <li><a href="#remove-jj-from-a-git-repo" id="toc-remove-jj-from-a-git-repo">Remove jj from a git repo </a></li>
+                <li><a href="#push-a-new-branch" id="toc-push-a-new-branch">Push a new branch </a></li>
+                <li><a href="#push-an-update-to-an-existing-branch" id="toc-push-an-update-to-an-existing-branch">Push an update to an existing branch </a></li>
+                </ul></li>
+                <li><a href="#references" id="toc-references">References </a></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Mapping C concepts to Rust</title>
+    <link href="https://vmandela.com/blog/2025/2025-01-04-notes-on-rust.html" />
+    <id>https://vmandela.com/blog/2025/2025-01-04-notes-on-rust.html</id>
+    <published>2025-01-04T00:00:00Z</published>
+    <updated>2025-01-04T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on January  4, 2025
+    
+  |
+        <a href="/tags/rust.html" class="tag is-link">rust</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>NOTE: These are my notes as I learn Rust. Accuracy is on par with a hallucinating LLM.</p>
+<h1 id="build-system">Build System<a href="#build-system" class="anchorjs-link"> </a></h1>
+<h2 id="organization">Organization<a href="#organization" class="anchorjs-link"> </a></h2>
+<p>Package vs Crate vs Module vs Workspace</p>
+<p><a href="https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html" class="uri">https://doc.rust-lang.org/book/ch07-01-packages-and-crates.html</a></p>
+<ul>
+<li>A crate is the equivalent of a library.</li>
+<li>A binary crate is the equivalent of an executable.</li>
+<li>A package is a bundle of one or more crates.
+<ul>
+<li>Package should have atleast 1 crate.</li>
+<li>Package can have atmost 1 library crate.</li>
+<li>Package can have multiple binary crates.</li>
+</ul></li>
+<li>By conventions, entry point for compilation of a
+<ul>
+<li>library crate is <code>src/lib.rs</code></li>
+<li>binary crate is <code>src/main.rs</code></li>
+</ul>
+The entry point is referred to as crate root.</li>
+<li>Crate root can define modules. Module source can be at <code>src/mod_name.rs</code>.</li>
+<li>A module can define submodules. Submodules are found at <code>src/mod_name/submod_name.rs</code>.</li>
+<li>There is no makefile equivalent for a crate. The files to be compiled are inferred from the crate root.</li>
+<li>A workspace is a cargo supported way to develop multiple closely related packages together.</li>
+</ul>
+<p>At a high level,</p>
+<ul>
+<li>Workspace has multiple packages.</li>
+<li>One package has 1 library crate plus some related application.</li>
+<li>Each crate can define some modules and submodules.</li>
+</ul>
+<h2 id="kconfig">KConfig<a href="#kconfig" class="anchorjs-link"> </a></h2>
+<h1 id="preprocessor">Preprocessor<a href="#preprocessor" class="anchorjs-link"> </a></h1>
+<h2 id="conditional-compilation">Conditional compilation<a href="#conditional-compilation" class="anchorjs-link"> </a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">void</span> handle_version<span class="op">()</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="pp">#if (CONFIG_VER==1)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    handle_v1<span class="op">();</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="pp">#elif (CONFIG_VER==2)</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    handle_v2<span class="op">();</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="pp">#else</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    handle_other_versions<span class="op">();</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="pp">#endif</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<p>Rust equivalent is using the <a href="https://crates.io/crates/cfg-if">cfg-if</a> crate.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode rust"><code class="sourceCode rust"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">fn</span> handle_version() </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="at">#[</span>cfg<span class="at">(</span>unix<span class="at">)]</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        handle_v1()<span class="op">;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="at">#[</span>cfg<span class="at">(</span>target_pointer_width <span class="op">=</span> <span class="st">&quot;32&quot;</span><span class="at">)]</span> <span class="op">{</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        handle<span class="op">-</span>v2()<span class="op">;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        handle_others()<span class="op">;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<h1 id="links">Links<a href="#links" class="anchorjs-link"> </a></h1>
+<ol type="1">
+<li>https://doc.rust-lang.org/book/appendix-04-useful-development-tools.html</li>
+</ol>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#build-system" id="toc-build-system">Build System </a>
+                <ul>
+                <li><a href="#organization" id="toc-organization">Organization </a></li>
+                <li><a href="#kconfig" id="toc-kconfig">KConfig </a></li>
+                </ul></li>
+                <li><a href="#preprocessor" id="toc-preprocessor">Preprocessor </a>
+                <ul>
+                <li><a href="#conditional-compilation" id="toc-conditional-compilation">Conditional compilation </a></li>
+                </ul></li>
+                <li><a href="#links" id="toc-links">Links </a></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>The Chinese Checkers Prodigy</title>
+    <link href="https://vmandela.com/blog/2024/2024-10-12-chinese-checker-prodigy.html" />
+    <id>https://vmandela.com/blog/2024/2024-10-12-chinese-checker-prodigy.html</id>
+    <published>2024-10-12T00:00:00Z</published>
+    <updated>2024-10-12T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on October 12, 2024
+    
+  |
+        
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>When I was young, I used to hang out in my dads office. They had a recreation room with indoor games, news papers and magazines. One fine day, my dad taught me chinese checkers. He won the first game and I won the second game. Thats how I spent years thinking I was a prodigy at chinese checkers. Thanks Dad.</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Ubuntu 22.04 migration</title>
+    <link href="https://vmandela.com/blog/2023/2023-04-09-ubuntu-22.04-migration.html" />
+    <id>https://vmandela.com/blog/2023/2023-04-09-ubuntu-22.04-migration.html</id>
+    <published>2023-04-09T00:00:00Z</published>
+    <updated>2023-04-09T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on April  9, 2023
+    
+  |
+        <a href="/tags/linux.html" class="tag is-link">linux</a> <a href="/tags/yak%20shaving.html" class="tag is-link">yak shaving</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>Finally I found the gap at work to move my work laptop to ubuntu 22.04.</p>
+<ul>
+<li>I started with the ubuntu server iso instead of the desktop iso to keep unwanted features out. I had the laptop on ethernet as I was not sure if the wireless driver would be part of the iso.</li>
+<li>I went with Plasma Desktop/KDE as the window manager instead of my usual xmonad. Webex Teams is to blame.</li>
+<li>Using <a href="https://nixos.org/manual/nix/stable/installation/installing-binary.html#installing-a-binary-distribution">Nixpkgs</a> + <a href="https://rycee.gitlab.io/home-manager/">home-manager</a> along with dotfiles made it very easy to get the user space programs back.</li>
+</ul>
+<h1 id="detours">Detours<a href="#detours" class="anchorjs-link"> </a></h1>
+<h2 id="sddm">sddm<a href="#sddm" class="anchorjs-link"> </a></h2>
+<p>I installed nixpkgs in daemon mode. This creates a bunch of build users. I was looking for a way to hide the users in SDDM login screen.
+None of the options in the <a href="https://manpages.ubuntu.com/manpages/jammy/en/man5/sddm.conf.5.html">SDDM config file</a> seemed to take effect.
+Starting the sddm greeter in test mode seemed to use the configuration correctly.</p>
+<pre><code>&gt; sddm-greeter --test-mode</code></pre>
+<p>Reading the source did not help much either. Eventually I stumbled upon the solution that sddm configuration files need to be files and not symbolic links to files.
+I could not figure this out from the source but this restriction makes sense for a component that controls the login screen.</p>
+<p>The other irritation was sddm starting with a on-screen keyboard by default. I had to configure the <code>InputMethod</code> option to disable it.</p>
+<pre><code>[Users]
+HideShells=/sbin/nologin
+MaximumUid=20000
+MinimumUid=1000
+
+[X11]
+EnableHiDPI=true
+MinimumVT=7
+
+[General]
+
+# Input method module
+InputMethod=</code></pre>
+<h2 id="home-manager">home-manager<a href="#home-manager" class="anchorjs-link"> </a></h2>
+<p>The change in configuration file location and format since 2021 led to a bit of head scratching. The config file location changed from
+<code>~/.config/nixpkgs/home.nix</code> to <code>~/.config/home-manager/home.nix</code>. I also had a mismatch between the nixpkgs channel and the home-manager channel.
+<code>nixpkgs</code> channel was set to master and I had to use the corresponding home-manager channel. Once the channels matched, the package installation was smooth.</p>
+<h2 id="nix">Nix<a href="#nix" class="anchorjs-link"> </a></h2>
+<p>I am experimenting using Nix for installing fonts as well. This requires running <code>fc-cache</code> with the installation path as argument.</p>
+<pre><code>&gt; nix-env -iA nixpkgs.jetbrains-mono
+&gt; fc-cache -v $HOME/.nix-profile/share/fonts/</code></pre>
+<h2 id="dmesg">dmesg<a href="#dmesg" class="anchorjs-link"> </a></h2>
+<p><code>dmesg</code> not being accessible to normal user was surprise coming from 18.04. Apparently the change was introduced in ubuntu 20.10.
+I had to set <code>kernel.dmesg_restrict = 0</code> in <code>/etc/sysctl.d/10-kernel-hardening.conf</code> to allow non-root users access to dmesg.</p>
+<p><a href="https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied#390187" class="uri">https://unix.stackexchange.com/questions/390184/dmesg-read-kernel-buffer-failed-permission-denied#390187</a></p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#detours" id="toc-detours">Detours </a>
+                <ul>
+                <li><a href="#sddm" id="toc-sddm">sddm </a></li>
+                <li><a href="#home-manager" id="toc-home-manager">home-manager </a></li>
+                <li><a href="#nix" id="toc-nix">Nix </a></li>
+                <li><a href="#dmesg" id="toc-dmesg">dmesg </a></li>
+                </ul></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Switching blog to Atkinson Hyperlegible font</title>
+    <link href="https://vmandela.com/blog/2022/2022-10-16-switch-font-to-atkinson.html" />
+    <id>https://vmandela.com/blog/2022/2022-10-16-switch-font-to-atkinson.html</id>
+    <published>2022-10-16T00:00:00Z</published>
+    <updated>2022-10-16T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on October 16, 2022
+    
+  |
+        <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/css.html" class="tag is-link">css</a> <a href="/tags/font.html" class="tag is-link">font</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>Ever since coming across the Atkinson Hyperlegible font
+<a href="https://brailleinstitute.org/freefont" class="uri">https://brailleinstitute.org/freefont</a>, I wanted to experiment on the blog with
+it. Switching the font in bulma was just following the documentation and using
+the right url for fonts from google fonts.</p>
+<ol type="1">
+<li>Bulma documentation - <a href="https://bulma.io/documentation/customize/with-sass-cli/#6-add-your-own-bulma-styles" class="uri">https://bulma.io/documentation/customize/with-sass-cli/#6-add-your-own-bulma-styles</a></li>
+<li>Sass file to update the font - <a href="https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.sass" class="uri">https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.sass</a></li>
+<li>Resulting CSS - <a href="https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.css" class="uri">https://github.com/vmandela/bulma/blob/d897152b9b153e697de2151725c0216ada59c111/bulma-atkinson.css</a></li>
+</ol>
+<p>The blog looks good even though I say so myself.:-)</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Discovering Haskell Adhoc Polymorphism</title>
+    <link href="https://vmandela.com/blog/2021/2021-03-14-discovering-haskell-adhoc-polymorphism.html" />
+    <id>https://vmandela.com/blog/2021/2021-03-14-discovering-haskell-adhoc-polymorphism.html</id>
+    <published>2021-03-14T00:00:00Z</published>
+    <updated>2021-03-14T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on March 14, 2021
+    
+  |
+        <a href="/tags/haskell.html" class="tag is-link">haskell</a> <a href="/tags/hakyll.html" class="tag is-link">hakyll</a> <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/pandoc.html" class="tag is-link">pandoc</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>This blog is built with Hakyll. Hakyll uses Pandoc for markdown to html
+conversion. The blog breaks approximately once an year with a change to the
+underlying <a href="https://github.com/jgm/pandoc-types">pandoc-types</a>.</p>
+<p>One of the past breaking changes was the conversion basic text data type from
+<code>[Char]</code> to <code>Data.Text</code>. The change broke some of the filters I used in the
+blog. One of the filters was a function to strip the initial <code>/</code> from any
+resources used in the blog. Hakyll uses URLs with slash at the beginning ‘/’ for
+local images/resources. I used this filter to fixup the link to images to relative
+links before converting them into Word document or PDF format.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ot">stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>stripSlash (x<span class="op">:</span>xs)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="ch">&#39;/&#39;</span> <span class="op">==</span> x <span class="ot">=</span> xs</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> [x] <span class="op">++</span> xs</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>stripSlash _ <span class="ot">=</span> []</span></code></pre></div>
+<p>I was looking for a way to modify the <code>stripSlash</code> function to support both
+<code>[Char]</code> and <code>Data.Text</code> data type. Thats how I discovered Haskells ad-hoc
+polymorphism. This required defining a typeclass and creating an instance of it
+for each data type I needed to support.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE TypeSynonymInstances #-}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE FlexibleInstances #-}</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ot">{-# LANGUAGE InstanceSigs #-}</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="dt">StringUtils</span> a <span class="kw">where</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> a <span class="ot">-&gt;</span> a</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">String</span> <span class="kw">where</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  stripSlash (x<span class="op">:</span>xs)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="ch">&#39;/&#39;</span> <span class="op">==</span> x <span class="ot">=</span> xs</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="op">|</span> <span class="fu">otherwise</span> <span class="ot">=</span> [x] <span class="op">++</span> xs</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  stripSlash _ <span class="ot">=</span> []</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="kw">instance</span> <span class="dt">StringUtils</span> <span class="dt">T.Text</span> <span class="kw">where</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ot">  stripSlash ::</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> <span class="dt">T.Text</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  stripSlash x <span class="ot">=</span> T.pack (stripSlash <span class="op">$</span> T.unpack x)</span></code></pre></div>
+<p>Here are a couple of links that helped me.</p>
+<ol type="1">
+<li><a href="https://stackoverflow.com/questions/12430660/creating-polymorphic-functions-in-haskell" class="uri">https://stackoverflow.com/questions/12430660/creating-polymorphic-functions-in-haskell</a></li>
+<li><a href="https://en.wikibooks.org/wiki/Haskell/Polymorphism#Ad-hoc_polymorphism" class="uri">https://en.wikibooks.org/wiki/Haskell/Polymorphism#Ad-hoc_polymorphism</a></li>
+</ol>
+<p>I am one of todays lucky 10000. :-)</p>
+<figure>
+<img src="https://imgs.xkcd.com/comics/ten_thousand.png" alt="Lucky 10000" />
+<figcaption aria-hidden="true">Lucky 10000</figcaption>
+</figure>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>NixOS configuration on a T480</title>
+    <link href="https://vmandela.com/blog/2020/2020-04-04-nixos-setup-experience.html" />
+    <id>https://vmandela.com/blog/2020/2020-04-04-nixos-setup-experience.html</id>
+    <published>2020-04-04T00:00:00Z</published>
+    <updated>2020-04-04T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on April  4, 2020
+    
+  |
+        <a href="/tags/nixos.html" class="tag is-link">nixos</a> <a href="/tags/t480.html" class="tag is-link">t480</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>After years of using nixpkgs on ubuntu and nixos in virtual machine,
+I finally made the switch to using nixos as the primary OS on the
+home laptop.
+As the home laptop is shared, I used a dual boot configuration with
+Windows10 along side NixOS.
+Each OS is installed to a separate hard disk.
+The installation process was pleasantly uneventful.</p>
+<ol type="1">
+<li><p>The WiFi card was autodetected. WiFi configuration was easy once I
+discovered <code>nmcli</code>.</p>
+<pre><code># /etc/nixos/configuration.nix
+networking.networkmanager.enable = true; # Enable network manager</code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nmcli d wifi connect vmandela <span class="at">--ask</span></span></code></pre></div></li>
+<li><p>With grub os prober enabled, windows 10 showed up automatically
+in the bootloader menu.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Use the systemd-boot EFI boot loader.
+boot.loader = {
+        systemd-boot.enable = true;
+        efi.canTouchEfiVariables = true;
+        grub = {
+                enable = true;
+                devices = [ &quot;nodev&quot; ];
+                efiSupport = true;
+                useOSProber = true;
+        };
+};</code></pre></li>
+<li><p>Windows 10 and NixOS treat the hardware clock differently.
+Windows 10 treats the hardware clock as local time while
+NixOS treats it as UTC.
+To resolve this difference, I had to switch NixOS to treat
+hardware clock as local time.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Set your time zone.
+time.timeZone = &quot;Asia/Kolkata&quot;;
+# Use hardware clock in local time instead of UTC
+# This is required for compatibility with windows
+time.hardwareClockInLocalTime = true;</code></pre></li>
+<li><p><a href="https://store.steampowered.com/">Steam</a> worked out of the box following the
+instructions in the <a href="https://nixos.org/nixpkgs/manual/#sec-steam-play">Nixpkgs Manual</a>.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Required for steam
+hardware.pulseaudio.support32Bit = true;
+hardware.opengl.driSupport32Bit = true;</code></pre></li>
+<li><p>Setting up <a href="https://www.nginx.com/">NGINX</a> required a little
+document hunting.
+I use NGINX for checking out my blog locally before pushing it
+to github.
+My usecase fell into the so simple it is undocumented category.</p>
+<pre><code># /etc/nixos/configuration.nix
+# Enable NGINX
+services.nginx = {
+    enable = true;
+    virtualHosts.&quot;localhost&quot; = {
+        root = &quot;/home/vmandela/code/gh-blog/_site&quot;;
+    };
+};</code></pre></li>
+<li><p>Power management and monitoring is done using <code>tlp</code> and <code>upower</code>.</p>
+<pre><code># For thinkpad
+services.tlp.enable = true;
+
+# Battery power management
+services.upower.enable = true;</code></pre></li>
+<li><p>Getting the user environment setup was done by reusing dotfiles
+from the previous machine and
+using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></li>
+</ol>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Notes on Python</title>
+    <link href="https://vmandela.com/blog/2019/2019-11-11-python-notes.html" />
+    <id>https://vmandela.com/blog/2019/2019-11-11-python-notes.html</id>
+    <published>2019-11-11T00:00:00Z</published>
+    <updated>2019-11-11T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on November 11, 2019
+    
+  |
+        <a href="/tags/python.html" class="tag is-link">python</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<h2 id="setting-log-level-dynamically">Setting log level dynamically<a href="#setting-log-level-dynamically" class="anchorjs-link"> </a></h2>
+<p>If you want to change the log level for one iteration of a loop or one call of a function, it can be done by calling <code>setLevel</code> on the current logger instance.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logging.error(<span class="st">&quot;This statement will be shown&quot;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This will not be shown&quot;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;DEBUG&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be shown&quot;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;ERROR&quot;</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be hidden&quot;</span>)</span></code></pre></div>
+<p>This results in</p>
+<pre><code>ERROR:root:This statement will be shown
+DEBUG:root:This debug statement will be shown</code></pre>
+<h3 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> </a></h3>
+<ol type="1">
+<li>Logging module documentation - <a href="https://docs.python.org/3.8/library/logging.html" class="uri">https://docs.python.org/3.8/library/logging.html</a></li>
+<li>Logging HOWTO - <a href="https://docs.python.org/3.8/howto/logging.html" class="uri">https://docs.python.org/3.8/howto/logging.html</a></li>
+</ol>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#setting-log-level-dynamically" id="toc-setting-log-level-dynamically">Setting log level dynamically </a>
+                <ul>
+                <li><a href="#related-reading" id="toc-related-reading">Related reading </a></li>
+                </ul></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Notes on Make</title>
+    <link href="https://vmandela.com/blog/2019/2019-11-11-make-notes.html" />
+    <id>https://vmandela.com/blog/2019/2019-11-11-make-notes.html</id>
+    <published>2019-11-11T00:00:00Z</published>
+    <updated>2019-11-11T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on November 11, 2019
+    
+  |
+        <a href="/tags/make.html" class="tag is-link">make</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>This is a collection of notes I have accumulated while working with make. The make manual is a good place to start looking for answers.</p>
+<p><a href="https://www.gnu.org/software/make/manual/make.html" class="uri">https://www.gnu.org/software/make/manual/make.html</a></p>
+<h2 id="debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> </a></h2>
+<h2 id="gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> </a></h2>
+<p>The <code>info</code> command can be used to dump information from makefile.</p>
+<p><a href="https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions" class="uri">https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions</a></p>
+<pre><code>$(info CFLAGS=$(CFLAGS))</code></pre>
+<p>Similarly one can use the <code>error</code> and <code>warning</code> commands can be used for debugging.</p>
+<h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> </a></h3>
+<p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake
+with enhanced tracing and a builtin debugger. I have been using remake as a
+replacement for make on my development machine and am yet to run into any
+issues.</p>
+<pre><code>alias make=remake</code></pre>
+<p>Now you can use</p>
+<pre><code>make --trace</code></pre>
+<p>to get better information on why a target is being built/rebuilt.</p>
+<p>The <code>-B</code> option of remake triggers an unconditional rebuild of a specified target.</p>
+<h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> </a></h4>
+<ol type="1">
+<li>Debugging makefiles with remake - <a href="https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf" class="uri">https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf</a></li>
+<li>Remake home page - <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a></li>
+<li>Remake GitHub repository - <a href="https://github.com/rocky/remake" class="uri">https://github.com/rocky/remake</a></li>
+</ol>
+<h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> </a></h2>
+<p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when
+invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise
+you might see warnings such as</p>
+<pre><code>make[1]: warning: jobserver unavailable: using -j1.  Add &#39;+&#39; to parent make rule.</code></pre>
+<h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> </a></h3>
+<ol type="1">
+<li>How the make variable works - <a href="https://www.gnu.org/software/make/manual/make.html#MAKE-Variable" class="uri">https://www.gnu.org/software/make/manual/make.html#MAKE-Variable</a></li>
+<li>GNUMake Jobserver Implementation - <a href="http://make.mad-scientist.net/papers/jobserver-implementation/" class="uri">http://make.mad-scientist.net/papers/jobserver-implementation/</a></li>
+<li>Recursive make considered harmful - <a href="http://aegis.sourceforge.net/auug97.pdf" class="uri">http://aegis.sourceforge.net/auug97.pdf</a></li>
+</ol>
+<h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> </a></h2>
+<h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> </a></h3>
+<p>When one of the dependencies is a symbolic link, make checks the modification time of the file
+referenced by the link. This is sensible behaviour and probably the reason it is not called out
+in the gnu make manual.</p>
+<p>There is also the “-L” option which causes make to consider the modification time of the symlink
+as well. This is option is useful when one wants to “touch symlink” and run make.</p>
+<pre><code>`-L&#39;
+`--check-symlink-times&#39;
+
+    On systems that support symbolic links, this option causes make to consider the timestamps
+    on any symbolic links in addition to the timestamp on the file referenced by those links.
+    When this option is provided, the most recent timestamp among the file and the symbolic
+    links is taken as the modification time for this target file.</code></pre>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                                <p class="menu-label">Sections</p>
+                <div class="menu-list">
+                <ul>
+                    <li> <a href="#">Top of the Page</a> </li>
+                </ul>
+                <ul>
+                <li><a href="#debugging-makefiles" id="toc-debugging-makefiles">Debugging makefiles </a></li>
+                <li><a href="#gmake-info-command" id="toc-gmake-info-command">gmake info command </a>
+                <ul>
+                <li><a href="#remake" id="toc-remake">Remake </a></li>
+                </ul></li>
+                <li><a href="#parallelizing-recursive-make" id="toc-parallelizing-recursive-make">Parallelizing recursive make </a>
+                <ul>
+                <li><a href="#related-reading-1" id="toc-related-reading-1">Related reading </a></li>
+                </ul></li>
+                <li><a href="#miscellaneous" id="toc-miscellaneous">Miscellaneous </a>
+                <ul>
+                <li><a href="#handling-symbolic-links" id="toc-handling-symbolic-links">Handling symbolic links </a></li>
+                </ul></li>
+                </ul>
+                </div>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+<entry>
+    <title>Styling Hakyll Tags</title>
+    <link href="https://vmandela.com/blog/2019/2019-10-13-hakyll-styling-tags.html" />
+    <id>https://vmandela.com/blog/2019/2019-10-13-hakyll-styling-tags.html</id>
+    <published>2019-10-13T00:00:00Z</published>
+    <updated>2019-10-13T00:00:00Z</updated>
+    <summary type="html"><![CDATA[<div class="info">
+    Posted on October 13, 2019
+    
+  |
+        <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/haskell.html" class="tag is-link">haskell</a> <a href="/tags/hakyll.html" class="tag is-link">hakyll</a>
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>This blog is generated using Hakyll. Hakyll provides a way to annotate posts with tags and generate a list of pages with the same tag. I followed the excellent guide from <a href="https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html" class="uri">https://javran.github.io/posts/2014-03-01-add-tags-to-your-hakyll-blog.html</a> and added
+the tags feature to the blog. The html produced for the tags is quite bare</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="dt">&gt;</span>blog setup<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="dt">&gt;</span>haskell<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="dt">&gt;</span>hakyll<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><a href="../../tags/blog%20setup.html">blog setup</a>, <a href="../../tags/haskell.html">haskell</a>, <a href="../../tags/hakyll.html">hakyll</a></p>
+<p>and I wanted to style it using bulma “is-link” and “tag” attributes.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/blog%20setup.html&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;tag is-link&quot;</span><span class="dt">&gt;</span>blog setup<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/haskell.html&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;tag is-link&quot;</span><span class="dt">&gt;</span>haskell<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">&quot;../../tags/hakyll.html&quot;</span><span class="ot"> class</span><span class="op">=</span><span class="st">&quot;tag is-link&quot;</span><span class="dt">&gt;</span>hakyll<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre></div>
+<p><a href="../../tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="../../tags/haskell.html" class="tag is-link">haskell</a> <a href="../../tags/hakyll.html" class="tag is-link">hakyll</a></p>
+<p>While this can be done with jquery after the page is loaded, I wanted to do the styling during site generation. I took this as an opportunity to play with Hakyll.</p>
+<p>The html for the tags is added to the Hakyll post context by the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/Hakyll-Web-Tags.html#v:tagsField"><code>tagsField</code></a> function.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>postCtxWithTags tags <span class="ot">=</span> tagsField <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span></code></pre></div>
+<p>Hakyll also offers a <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/Hakyll-Web-Tags.html#v:tagsFieldWith"><code>tagsFieldWith</code></a> function where the HTML generation can be customized. Below is the code I ended up with.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ot">postCtxWithTags ::</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> <span class="dt">String</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>postCtxWithTags tags <span class="ot">=</span> tagsFieldBulma <span class="st">&quot;tags&quot;</span> tags <span class="ot">`mappend`</span> postCtx</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="ot">tagsFieldBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Tags</span> <span class="ot">-&gt;</span> <span class="dt">Context</span> a</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>tagsFieldBulma <span class="ot">=</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  tagsFieldWith getTags simpleRenderLinkBulma (<span class="fu">mconcat</span> <span class="op">.</span> intersperse <span class="st">&quot; &quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="ot">simpleRenderLinkBulma ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> (<span class="dt">Maybe</span> <span class="dt">FilePath</span>) <span class="ot">-&gt;</span> <span class="dt">Maybe</span> <span class="dt">H.Html</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma _ <span class="dt">Nothing</span> <span class="ot">=</span> <span class="dt">Nothing</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>simpleRenderLinkBulma tag (<span class="dt">Just</span> filePath) <span class="ot">=</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="dt">Just</span> <span class="op">$</span> H.a <span class="op">!</span> A.href (toValue <span class="op">$</span> toUrl filePath) <span class="op">!</span> A.class_ <span class="st">&quot;tag is-link&quot;</span> <span class="op">$</span> toHtml tag</span></code></pre></div>
+<p>This snippet custmoizes the <a href="https://hackage.haskell.org/package/hakyll-4.13.0.1/docs/src/Hakyll.Web.Tags.html#simpleRenderLink"><code>simpleRenderLink</code></a> function to add <code>tag is-link</code> attributes to the tags. This function is plugged into <code>tagsFieldBulma</code> which gets plugged into <code>postCtxWithTags</code>.
+The link to full source is here <a href="/static_root/Tags.hs">Tags.hs</a>.</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></summary>
+</entry>
+
+</feed>
