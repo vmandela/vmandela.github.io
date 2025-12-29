@@ -7,12 +7,15 @@
         <description><![CDATA[Posts about programming, Linux, and technology]]></description>
         <atom:link href="https://vmandela.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Sun, 12 Jan 2025 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>January 14, 2025</lastBuildDate>
         <item>
     <title>Jujutsu DVCS Cheatsheet</title>
     <link>https://vmandela.com/blog/2025/2025-01-12-jujutsu-dvcs-cheatsheet.html</link>
     <description><![CDATA[<div class="info">
     Posted on January 12, 2025
+     |
+        Updated on January 14, 2025
+    
     
   |
         <a href="/tags/git.html" class="tag is-link">git</a> <a href="/tags/jujutsu.html" class="tag is-link">jujutsu</a> <a href="/tags/version%20control.html" class="tag is-link">version control</a>
@@ -93,6 +96,9 @@ $ jj git push</code></pre>
     <link>https://vmandela.com/blog/2025/2025-01-04-notes-on-rust.html</link>
     <description><![CDATA[<div class="info">
     Posted on January  4, 2025
+     |
+        Updated on January  6, 2025
+    
     
   |
         <a href="/tags/rust.html" class="tag is-link">rust</a>
@@ -206,6 +212,9 @@ The entry point is referred to as crate root.</li>
     <link>https://vmandela.com/blog/2024/2024-10-12-chinese-checker-prodigy.html</link>
     <description><![CDATA[<div class="info">
     Posted on October 12, 2024
+     |
+        Updated on October 12, 2024
+    
     
   |
         
@@ -243,6 +252,9 @@ The entry point is referred to as crate root.</li>
     <link>https://vmandela.com/blog/2023/2023-04-09-ubuntu-22.04-migration.html</link>
     <description><![CDATA[<div class="info">
     Posted on April  9, 2023
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/linux.html" class="tag is-link">linux</a> <a href="/tags/yak%20shaving.html" class="tag is-link">yak shaving</a>
@@ -334,6 +346,9 @@ I had to set <code>kernel.dmesg_restrict = 0</code> in <code>/etc/sysctl.d/10-ke
     <link>https://vmandela.com/blog/2022/2022-10-16-switch-font-to-atkinson.html</link>
     <description><![CDATA[<div class="info">
     Posted on October 16, 2022
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/css.html" class="tag is-link">css</a> <a href="/tags/font.html" class="tag is-link">font</a>
@@ -380,6 +395,9 @@ the right url for fonts from google fonts.</p>
     <link>https://vmandela.com/blog/2021/2021-03-14-discovering-haskell-adhoc-polymorphism.html</link>
     <description><![CDATA[<div class="info">
     Posted on March 14, 2021
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/haskell.html" class="tag is-link">haskell</a> <a href="/tags/hakyll.html" class="tag is-link">hakyll</a> <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/pandoc.html" class="tag is-link">pandoc</a>
@@ -462,6 +480,9 @@ for each data type I needed to support.</p>
     <link>https://vmandela.com/blog/2020/2020-04-04-nixos-setup-experience.html</link>
     <description><![CDATA[<div class="info">
     Posted on April  4, 2020
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/nixos.html" class="tag is-link">nixos</a> <a href="/tags/t480.html" class="tag is-link">t480</a>
@@ -565,6 +586,9 @@ using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></
     <link>https://vmandela.com/blog/2019/2019-11-11-python-notes.html</link>
     <description><![CDATA[<div class="info">
     Posted on November 11, 2019
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/python.html" class="tag is-link">python</a>
@@ -636,6 +660,9 @@ DEBUG:root:This debug statement will be shown</code></pre>
     <link>https://vmandela.com/blog/2019/2019-11-11-make-notes.html</link>
     <description><![CDATA[<div class="info">
     Posted on November 11, 2019
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/make.html" class="tag is-link">make</a>
@@ -742,6 +769,9 @@ as well. This is option is useful when one wants to “touch symlink” and run 
     <link>https://vmandela.com/blog/2019/2019-10-13-hakyll-styling-tags.html</link>
     <description><![CDATA[<div class="info">
     Posted on October 13, 2019
+     |
+        Updated on August  4, 2018
+    
     
   |
         <a href="/tags/blog%20setup.html" class="tag is-link">blog setup</a> <a href="/tags/haskell.html" class="tag is-link">haskell</a> <a href="/tags/hakyll.html" class="tag is-link">hakyll</a>
