@@ -7,8 +7,53 @@
         <description><![CDATA[Posts about programming, Linux, and technology]]></description>
         <atom:link href="https://vmandela.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>January 24, 2026</lastBuildDate>
+        <lastBuildDate>May  9, 2026</lastBuildDate>
         <item>
+    <title>All Silver Tea Cups</title>
+    <link>https://vmandela.com/blog/2026/2026-04-18-all-silver-tea-cups.html</link>
+    <description><![CDATA[<div class="info">
+    Posted on April 18, 2026
+     |
+        Updated on May  9, 2026
+    
+    
+  |
+        
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>One of my enduring memories of my dad is the afternoon he taught me All Silver Tea Cups.
+I was may be in Class 5 and trignometry was far away in Class 10.
+He was younger than I am now and I was older than my kids are now.
+I remember him pulling out a rough note book, drawing the four quadrants and explaining the mnemonic to me.
+I was too young to grasp it but the mnemonic stayed with me and the memory.
+Sometimes I wonder if any of the random info dumps I do to my kids end up as a core memory like ASTC.</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></description>
+    <pubDate>Sat, 18 Apr 2026 00:00:00 UT</pubDate>
+    <guid>https://vmandela.com/blog/2026/2026-04-18-all-silver-tea-cups.html</guid>
+    <dc:creator>Venkat Mandela</dc:creator>
+</item>
+<item>
     <title>Shifting from XMonad to i3 due to Webex</title>
     <link>https://vmandela.com/blog/2026/2026-01-24-xmonad-webex.html</link>
     <description><![CDATA[<div class="info">
@@ -716,115 +761,6 @@ DEBUG:root:This debug statement will be shown</code></pre>
 ]]></description>
     <pubDate>Mon, 11 Nov 2019 00:00:00 UT</pubDate>
     <guid>https://vmandela.com/blog/2019/2019-11-11-python-notes.html</guid>
-    <dc:creator>Venkat Mandela</dc:creator>
-</item>
-<item>
-    <title>Notes on Make</title>
-    <link>https://vmandela.com/blog/2019/2019-11-11-make-notes.html</link>
-    <description><![CDATA[<div class="info">
-    Posted on November 11, 2019
-     |
-        Updated on August  4, 2018
-    
-    
-  |
-        <a href="/tags/make.html" class="tag is-link">make</a>
-    
-</div>
-
-<div class="container">
-    <div class="columns">
-
-        <div class="column content is-10">
-<!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>This is a collection of notes I have accumulated while working with make. The make manual is a good place to start looking for answers.</p>
-<p><a href="https://www.gnu.org/software/make/manual/make.html" class="uri">https://www.gnu.org/software/make/manual/make.html</a></p>
-<h2 id="debugging-makefiles">Debugging makefiles<a href="#debugging-makefiles" class="anchorjs-link"> </a></h2>
-<h2 id="gmake-info-command">gmake info command<a href="#gmake-info-command" class="anchorjs-link"> </a></h2>
-<p>The <code>info</code> command can be used to dump information from makefile.</p>
-<p><a href="https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions" class="uri">https://www.gnu.org/software/make/manual/make.html#Make-Control-Functions</a></p>
-<pre><code>$(info CFLAGS=$(CFLAGS))</code></pre>
-<p>Similarly one can use the <code>error</code> and <code>warning</code> commands can be used for debugging.</p>
-<h3 id="remake">Remake<a href="#remake" class="anchorjs-link"> </a></h3>
-<p>Remake <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a> is a enhanced version of GNUMake
-with enhanced tracing and a builtin debugger. I have been using remake as a
-replacement for make on my development machine and am yet to run into any
-issues.</p>
-<pre><code>alias make=remake</code></pre>
-<p>Now you can use</p>
-<pre><code>make --trace</code></pre>
-<p>to get better information on why a target is being built/rebuilt.</p>
-<p>The <code>-B</code> option of remake triggers an unconditional rebuild of a specified target.</p>
-<h4 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> </a></h4>
-<ol type="1">
-<li>Debugging makefiles with remake - <a href="https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf" class="uri">https://www.usenix.org/legacy/events/lisa11/tech/full_papers/Bernstein.pdf</a></li>
-<li>Remake home page - <a href="http://bashdb.sourceforge.net/remake/" class="uri">http://bashdb.sourceforge.net/remake/</a></li>
-<li>Remake GitHub repository - <a href="https://github.com/rocky/remake" class="uri">https://github.com/rocky/remake</a></li>
-</ol>
-<h2 id="parallelizing-recursive-make">Parallelizing recursive make<a href="#parallelizing-recursive-make" class="anchorjs-link"> </a></h2>
-<p>To ensure the <code>-j N</code> flag is used when doing recursive make, use <code>$(MAKE)</code> when
-invoking the submake. This ensures that the gmake jobserver is used correctly. Otherwise
-you might see warnings such as</p>
-<pre><code>make[1]: warning: jobserver unavailable: using -j1.  Add &#39;+&#39; to parent make rule.</code></pre>
-<h3 id="related-reading-1">Related reading<a href="#related-reading-1" class="anchorjs-link"> </a></h3>
-<ol type="1">
-<li>How the make variable works - <a href="https://www.gnu.org/software/make/manual/make.html#MAKE-Variable" class="uri">https://www.gnu.org/software/make/manual/make.html#MAKE-Variable</a></li>
-<li>GNUMake Jobserver Implementation - <a href="http://make.mad-scientist.net/papers/jobserver-implementation/" class="uri">http://make.mad-scientist.net/papers/jobserver-implementation/</a></li>
-<li>Recursive make considered harmful - <a href="http://aegis.sourceforge.net/auug97.pdf" class="uri">http://aegis.sourceforge.net/auug97.pdf</a></li>
-</ol>
-<h2 id="miscellaneous">Miscellaneous<a href="#miscellaneous" class="anchorjs-link"> </a></h2>
-<h3 id="handling-symbolic-links">Handling symbolic links<a href="#handling-symbolic-links" class="anchorjs-link"> </a></h3>
-<p>When one of the dependencies is a symbolic link, make checks the modification time of the file
-referenced by the link. This is sensible behaviour and probably the reason it is not called out
-in the gnu make manual.</p>
-<p>There is also the “-L” option which causes make to consider the modification time of the symlink
-as well. This is option is useful when one wants to “touch symlink” and run make.</p>
-<pre><code>`-L&#39;
-`--check-symlink-times&#39;
-
-    On systems that support symbolic links, this option causes make to consider the timestamps
-    on any symbolic links in addition to the timestamp on the file referenced by those links.
-    When this option is provided, the most recent timestamp among the file and the symbolic
-    links is taken as the modification time for this target file.</code></pre>
-        </div>
-
-        <div class="column is-narrow menu">
-            <div class="sidebar">
-                <p class="menu-label">Root</p>
-                <ul class="menu-list">
-                    <li> <a href="/">Home</a> </li>
-                    <li> <a href="/about.html">About</a> </li>
-                </ul>
-                                <p class="menu-label">Sections</p>
-                <div class="menu-list">
-                <ul>
-                    <li> <a href="#">Top of the Page</a> </li>
-                </ul>
-                <ul>
-                <li><a href="#debugging-makefiles" id="toc-debugging-makefiles">Debugging makefiles </a></li>
-                <li><a href="#gmake-info-command" id="toc-gmake-info-command">gmake info command </a>
-                <ul>
-                <li><a href="#remake" id="toc-remake">Remake </a></li>
-                </ul></li>
-                <li><a href="#parallelizing-recursive-make" id="toc-parallelizing-recursive-make">Parallelizing recursive make </a>
-                <ul>
-                <li><a href="#related-reading-1" id="toc-related-reading-1">Related reading </a></li>
-                </ul></li>
-                <li><a href="#miscellaneous" id="toc-miscellaneous">Miscellaneous </a>
-                <ul>
-                <li><a href="#handling-symbolic-links" id="toc-handling-symbolic-links">Handling symbolic links </a></li>
-                </ul></li>
-                </ul>
-                </div>
-                            </div>
-        </div>
-
-    </div>
-</div>
-
-]]></description>
-    <pubDate>Mon, 11 Nov 2019 00:00:00 UT</pubDate>
-    <guid>https://vmandela.com/blog/2019/2019-11-11-make-notes.html</guid>
     <dc:creator>Venkat Mandela</dc:creator>
 </item>
 
