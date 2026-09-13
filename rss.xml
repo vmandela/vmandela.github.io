@@ -7,14 +7,12 @@
         <description><![CDATA[Posts about programming, Linux, and technology]]></description>
         <atom:link href="https://vmandela.com/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>May  9, 2026</lastBuildDate>
+        <lastBuildDate>Sun, 13 Sep 2026 00:00:00 UT</lastBuildDate>
         <item>
-    <title>All Silver Tea Cups</title>
-    <link>https://vmandela.com/blog/2026/2026-04-18-all-silver-tea-cups.html</link>
+    <title>SystemC with Bazel</title>
+    <link>https://vmandela.com/blog/2026/2026-09-13-systemc-with-bazel.html</link>
     <description><![CDATA[<div class="info">
-    Posted on April 18, 2026
-     |
-        Updated on May  9, 2026
+    Posted on September 13, 2026
     
     
   |
@@ -27,12 +25,58 @@
 
         <div class="column content is-10">
 <!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<p>One of my enduring memories of my dad is the afternoon he taught me All Silver Tea Cups.
-I was may be in Class 5 and trignometry was far away in Class 10.
+<p>I have started playing with <a href="https://en.wikipedia.org/wiki/SystemC">SystemC</a> for a work assignment.
+I first heard about SystemC in 2005 and been using SystemC simulators since 2018.
+This is the first time I would be doing modelling using SystemC.</p>
+<p>The ecosystem seems to be strongly tied to CMake as the build system.
+I am stuck with the idea that bazel is the better build system if the models have to scale
+across multiple devices.
+Its time to prototype quickly with bazel before it is too late.</p>
+        </div>
+
+        <div class="column is-narrow menu">
+            <div class="sidebar">
+                <p class="menu-label">Root</p>
+                <ul class="menu-list">
+                    <li> <a href="/">Home</a> </li>
+                    <li> <a href="/about.html">About</a> </li>
+                </ul>
+                            </div>
+        </div>
+
+    </div>
+</div>
+
+]]></description>
+    <pubDate>Sun, 13 Sep 2026 00:00:00 UT</pubDate>
+    <guid>https://vmandela.com/blog/2026/2026-09-13-systemc-with-bazel.html</guid>
+    <dc:creator>Venkat Mandela</dc:creator>
+</item>
+<item>
+    <title>All Silver Tea Cups</title>
+    <link>https://vmandela.com/blog/2026/2026-04-18-all-silver-tea-cups.html</link>
+    <description><![CDATA[<div class="info">
+    Posted on April 18, 2026
+     |
+        Updated on September 13, 2026
+    
+    
+  |
+        
+    
+</div>
+
+<div class="container">
+    <div class="columns">
+
+        <div class="column content is-10">
+<!-- Do not indent this. It will mess up the indentation for preformatted code -->
+<p>One of my enduring memories of my dad is the afternoon he taught me All Silver Tea Cups.</p>
+<p>I was may be in Class 5 and trignometry was far away in Class 10.
 He was younger than I am now and I was older than my kids are now.
-I remember him pulling out a rough note book, drawing the four quadrants and explaining the mnemonic to me.
-I was too young to grasp it but the mnemonic stayed with me and the memory.
-Sometimes I wonder if any of the random info dumps I do to my kids end up as a core memory like ASTC.</p>
+I remember him pulling out a rough note book, drawing the four quadrants and explaining the mnemonic to me.</p>
+<p>I was too young to grasp it but the mnemonic stayed with me and the memory.</p>
+<p>Sometimes I wonder if any of the random info dumps I do to my kids end up as a core memory like ASTC.</p>
         </div>
 
         <div class="column is-narrow menu">
@@ -687,80 +731,6 @@ using <a href="https://github.com/rycee/home-manager">Nix Home Manager</a></p></
 ]]></description>
     <pubDate>Sat, 04 Apr 2020 00:00:00 UT</pubDate>
     <guid>https://vmandela.com/blog/2020/2020-04-04-nixos-setup-experience.html</guid>
-    <dc:creator>Venkat Mandela</dc:creator>
-</item>
-<item>
-    <title>Notes on Python</title>
-    <link>https://vmandela.com/blog/2019/2019-11-11-python-notes.html</link>
-    <description><![CDATA[<div class="info">
-    Posted on November 11, 2019
-     |
-        Updated on August  4, 2018
-    
-    
-  |
-        <a href="/tags/python.html" class="tag is-link">python</a>
-    
-</div>
-
-<div class="container">
-    <div class="columns">
-
-        <div class="column content is-10">
-<!-- Do not indent this. It will mess up the indentation for preformatted code -->
-<h2 id="setting-log-level-dynamically">Setting log level dynamically<a href="#setting-log-level-dynamically" class="anchorjs-link"> </a></h2>
-<p>If you want to change the log level for one iteration of a loop or one call of a function, it can be done by calling <code>setLevel</code> on the current logger instance.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>logging.error(<span class="st">&quot;This statement will be shown&quot;</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This will not be shown&quot;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;DEBUG&quot;</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be shown&quot;</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>logging.getLogger().setLevel(<span class="st">&quot;ERROR&quot;</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>logging.debug(<span class="st">&quot;This debug statement will be hidden&quot;</span>)</span></code></pre></div>
-<p>This results in</p>
-<pre><code>ERROR:root:This statement will be shown
-DEBUG:root:This debug statement will be shown</code></pre>
-<h3 id="related-reading">Related reading<a href="#related-reading" class="anchorjs-link"> </a></h3>
-<ol type="1">
-<li>Logging module documentation - <a href="https://docs.python.org/3.8/library/logging.html" class="uri">https://docs.python.org/3.8/library/logging.html</a></li>
-<li>Logging HOWTO - <a href="https://docs.python.org/3.8/howto/logging.html" class="uri">https://docs.python.org/3.8/howto/logging.html</a></li>
-</ol>
-        </div>
-
-        <div class="column is-narrow menu">
-            <div class="sidebar">
-                <p class="menu-label">Root</p>
-                <ul class="menu-list">
-                    <li> <a href="/">Home</a> </li>
-                    <li> <a href="/about.html">About</a> </li>
-                </ul>
-                                <p class="menu-label">Sections</p>
-                <div class="menu-list">
-                <ul>
-                    <li> <a href="#">Top of the Page</a> </li>
-                </ul>
-                <ul>
-                <li><a href="#setting-log-level-dynamically" id="toc-setting-log-level-dynamically">Setting log level dynamically </a>
-                <ul>
-                <li><a href="#related-reading" id="toc-related-reading">Related reading </a></li>
-                </ul></li>
-                </ul>
-                </div>
-                            </div>
-        </div>
-
-    </div>
-</div>
-
-]]></description>
-    <pubDate>Mon, 11 Nov 2019 00:00:00 UT</pubDate>
-    <guid>https://vmandela.com/blog/2019/2019-11-11-python-notes.html</guid>
     <dc:creator>Venkat Mandela</dc:creator>
 </item>
 
